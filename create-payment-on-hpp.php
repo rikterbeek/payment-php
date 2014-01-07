@@ -37,6 +37,7 @@
   * $blockedMethods		: Blocked payment methods separeted with a , i.e. "ideal,mc,visa" (optional)
   * $offset				: Numeric value that will be added to the fraud score (optional)
   * $merchantSig		: The HMAC signature used by Adyen to test the validy of the form;
+
   */
     
   $merchantReference = 'Test payment ' . date("Y-m-d H:i:s");
