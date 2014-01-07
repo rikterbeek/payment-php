@@ -19,22 +19,22 @@
   * The variables that you can post to the HPP are the following:
   * 
   * $merchantReference	: The merchant reference is your reference for the payment;
-  * $paymentAmount	: Amount specified in minor units $1,00 = 100
-  * $currencyCode	: The three-letter capitalised ISO currency code to pay in
-  * $shipBeforeDate	: YYYY-MM-DD.
-  * $skinCode		: Your skin code
+  * $paymentAmount		: Amount specified in minor units $1,00 = 100
+  * $currencyCode		: The three-letter capitalised ISO currency code to pay in
+  * $shipBeforeDate		: YYYY-MM-DD.
+  * $skinCode			: Your skin code
   * $merchantAccount	: Your merchant account
   * $sessionValidity	: YYYY-MM-DDThh:mm:ssTZD
-  * $shopperLocale	: A combination of language code and country code to specify the language used in th e session
-  * $orderData		: A fragment of HTML/text that will be displayed on the HPP
-  * $countryCode	: Country code according to ISO_3166-1_alpha-2 standard  
-  * $shopperEmail	: The e-mailaddress of the shopper
+  * $shopperLocale		: A combination of language code and country code to specify the language used in th e session
+  * $orderData			: A fragment of HTML/text that will be displayed on the HPP
+  * $countryCode		: Country code according to ISO_3166-1_alpha-2 standard  
+  * $shopperEmail		: The e-mailaddress of the shopper
   * $shopperReference	: The shopper reference, i.e. the shopper ID
-  * $allowedMethods	: Allowed payment methods separeted with a , i.e. "ideal,mc,visa" 
-  * $blockedMethods	: Blocked payment methods separeted with a , i.e. "ideal,mc,visa"
-  * $offset		: Numeric value that will be added to the fraud score
+  * $allowedMethods		: Allowed payment methods separeted with a , i.e. "ideal,mc,visa" 
+  * $blockedMethods		: Blocked payment methods separeted with a , i.e. "ideal,mc,visa"
+  * $offset				: Numeric value that will be added to the fraud score
   * $shopperStatement	: 
-  * $merchantSig	: 
+  * $merchantSig		: 
   */
   
   $merchantReference = 'Test payment ' . date("Y-m-d H:i:s");
