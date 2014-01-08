@@ -5,11 +5,13 @@ and read the brief explanation on how this repository is structured.
 
 ## Code structure
 ```
-- create-payment-on-hpp.php             : Simple form creating a payment on our HPP;
-- notifications
-  - notification_server-soap.php        : Receive our notifications using SOAP;
-  - notification_server-httppost.php    : Receive our notification using HTTP Post;
-- modifications
+- 1. HPP
+    - create-payment-on-hpp.php           : Simple form creating a payment on our HPP;
+    - create-payment-on-hpp-advanced.php  : Advanced form creating a payment on our HPP;
+- 2. Notifications
+    - notification_server-soap.php        : Receive our notifications using SOAP;
+    - notification_server-httppost.php    : Receive our notification using HTTP Post;
+- 3. Modifications
   - capture-soap.php                    : Capture a payment using SOAP;
   - capture-httppost.php                : Capture a payment using HTTP Post;
   - refund-soap.php                     : Request a refund using SOAP;
