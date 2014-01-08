@@ -7,16 +7,19 @@ and read the brief explanation on how this repository is structured.
 ```
 - create-payment-on-hpp.php             : Simple form creating a payment on our HPP;
 - notifications
-  - notification-server-soap.php        : Receive our notifications using SOAP;
-  - notification-server-httppost.php    : Receive our notification using HTTP Post;
+  - notification_server-soap.php        : Receive our notifications using SOAP;
+  - notification_server-httppost.php    : Receive our notification using HTTP Post;
 - modifications
-  - modification-capture-soap.php       : Capture a payment using SOAP;
-  - modification-capture-httppost.php   : Capture a payment using HTTP Post;
-  - modification-refund-soap.php        : Request a refund using SOAP;
-  - modification-refund-httppost.php    : Request a refund using HTTP Post;
-  - modification-cancel-soap.php        : Cancel a payment using SOAP;
-  - modification-cancel-httppost.php    : Cancel a payment using HTTP Post;
-  - 
+  - capture-soap.php                    : Capture a payment using SOAP;
+  - capture-httppost.php                : Capture a payment using HTTP Post;
+  - refund-soap.php                     : Request a refund using SOAP;
+  - refund-httppost.php                 : Request a refund using HTTP Post;
+  - cancel-soap.php                     : Cancel a payment using SOAP;
+  - cancel-httppost.php                 : Cancel a payment using HTTP Post;
+- recurring
+  - request-recurring-contract.php      : Request a recurring contact for a shopper;
+  - disable-recurring-contract.php      : Disable a recurring contract for a shopper;
+- 
 
 ```
 
