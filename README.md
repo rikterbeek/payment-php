@@ -19,8 +19,6 @@ and read the brief explanation on how this repository is structured.
 - recurring
   - request-recurring-contract.php      : Request a recurring contact for a shopper;
   - disable-recurring-contract.php      : Disable a recurring contract for a shopper;
-- 
-
 ```
 
 ## Support
