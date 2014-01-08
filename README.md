@@ -25,7 +25,7 @@ and read the brief explanation on how this repository is structured.
   - disable-recurring-contract.php      : Disable a recurring contract for a shopper;
 ```
 ## Manuals
-The code examples are based on our Integration and API manual which provides rich information on how our platform works. 
+The code examples are based on our Integration and API manual which provides rich information on how our platform works. Please find our manuals on support.adyen.com. 
 
 ## Support
 If you do have any suggestions or questions regarding the code examples please send an e-mail to github@adyen.com.
