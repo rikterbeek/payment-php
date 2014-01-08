@@ -22,8 +22,7 @@ and read the brief explanation on how this repository is structured.
   - refund-httppost.php                 : Request a refund using HTTP Post;
 5.Recurring
   - request-recurring-contract.php      : Request a recurring contact for a shopper;
-  - disable-recurring-contract.php      : Disable a recurring contract for a shopper;\
-  - [support.adyen.com](support.adyen.com)
+  - disable-recurring-contract.php      : Disable a recurring contract for a shopper;
 ```
 ## Manuals
 The code examples are based on our Integration and API manual which provides rich information on how our platform works. Please find our manuals on [support.adyen.com](support.adyen.com). 
