@@ -74,7 +74,7 @@
   $merchantSig = base64_encode(pack('H*',$cryptHMAC->hash(
 	$paymentAmount . $currencyCode . $shipBeforeDate . $merchantReference . $skinCode . $merchantAccount . 
 	$sessionValidity . $shopperEmail . $shopperReference . 
-	$allowedMethods . $blockedMethods . $shopperStatement . $offset
+	$allowedMethods . $blockedMethods . $offset
   ))); 
 ?>
 <form method="POST" action="https://test.adyen.com/hpp/pay.shtml" target="_blank">
@@ -93,7 +93,6 @@
 	<input type="text" name="allowedMethods" value="<?=$allowedMethods ?>"/>
 	<input type="text" name="blockedMethods" value="<?=$blockedMethods ?>"/>
 	<input type="text" name="offset" value="<?=$offset ?>"/>
-	<input type="text" name="shopperStatement" value="<?=$shopperStatement ?>"/>
 	<input type="text" name="merchantSig" value="<?=$merchantSig ?>"/>
 	<input type="submit" value="Create payment" />
 </form>
