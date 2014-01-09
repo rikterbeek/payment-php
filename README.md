@@ -11,15 +11,21 @@ and read the brief explanation on how this repository is structured.
 2. API
   - create-payment-api.php              : Create an payment via our API;
 3.Notifications
-  - notification_server-soap.php        : Receive our notifications using SOAP;
-  - notification_server-httppost.php    : Receive our notification using HTTP Post;
+  - httppost
+    - notification-server.php           : Receive our notifications using HTTP Post;
+  - soap
+    - notification-server.php           : Receive our notification using SOAP;
 4.Modifications  
-  - cancel-soap.php                     : Cancel a payment using SOAP;
-  - cancel-httppost.php                 : Cancel a payment using HTTP Post;
-  - capture-soap.php                    : Capture a payment using SOAP;
-  - capture-httppost.php                : Capture a payment using HTTP Post;
-  - refund-soap.php                     : Request a refund using SOAP;
-  - refund-httppost.php                 : Request a refund using HTTP Post;
+  - httppost
+    - cancel-or-refund.php              : Cancel or refund a payment using HTTP Post;
+    - cancel.php                        : Cancel a payment using HTTP Post;
+    - capture.php                       : Capture a payment using HTTP Post;
+    - refund.php                        : Request a refund using HTTP Post;
+  - soap
+    - cancel-or-refund.php              : Cancel or refund a payment using SOAP;
+    - cancel-soap.php                   : Cancel a payment using SOAP;
+    - capture-soap.php                  : Capture a payment using SOAP;
+    - refund-soap.php                   : Request a refund using SOAP;
 5.Recurring
   - request-recurring-contract.php      : Request a recurring contact for a shopper;
   - disable-recurring-contract.php      : Disable a recurring contract for a shopper;
