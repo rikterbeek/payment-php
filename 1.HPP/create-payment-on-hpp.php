@@ -40,18 +40,16 @@
 
   */
     
-  $merchantReference = 'Test payment ' . date("Y-m-d H:i:s");
+  $merchantReference = "Test payment " . date("Y-m-d H:i:s");
   $paymentAmount = 199; 	
-  $currencyCode = 'EUR';	
+  $currencyCode = "EUR";	
   $shipBeforeDate = date("Y-m-d",strtotime("+3 days")); 
-  $skinCode = 'YourSkinCode';
-  $skinCode = 'Iix4eLo8';
-  $merchantAccount = 'YourMerchantAccount';
-  $merchantAccount = 'JessePiscaerCOM';
+  $skinCode = "YourSkinCode";
+  $merchantAccount = "YourMerchantAccount";
   $sessionValidity = date("c",strtotime("+1 days")); 
-  $shopperLocale = 'en_US'; 
+  $shopperLocale = "en_US"; 
   $orderData = base64_encode(gzencode("Orderdata to display on the HPP can be put here"));
-  $countryCode = "US"; 
+  $countryCode = "NL"; 
   $shopperEmail = "";
   $shopperReference = ""; 
   $allowedMethods = ""; 
@@ -64,14 +62,18 @@
    * The merchant signature is used by Adyen to verify if the posted data is not
    * altered by the shopper. The signature must be encrypted according to the procedure below.
    * For this code example we use HMAC Pear (http://pear.php.net/package/Crypt_HMAC/download)
+   * 
+   * Please note: the signature does contain more variables, in this example
+   * they are NOT required since they are empty. Please have a look at the
+   * advanced HPP example.
    */ 
-  require_once './HMAC.php';
+  require_once "../lib/HMAC.php";
   
   // HMAC Key is a shared secret KEY used to encrypt the signature, this can be configured in the skin. 
-  $hmacKey = "123456";
-  $cryptHMAC = new Crypt_HMAC($hmacKey, 'sha1');
+  $hmacKey = "YourHmacSecretKey";
+  $cryptHMAC = new Crypt_HMAC($hmacKey, "sha1");
   
-  $merchantSig = base64_encode(pack('H*',$cryptHMAC->hash(
+  $merchantSig = base64_encode(pack("H*",$cryptHMAC->hash(
 	$paymentAmount . $currencyCode . $shipBeforeDate . $merchantReference . $skinCode . $merchantAccount . 
 	$sessionValidity . $shopperEmail . $shopperReference . 
 	$allowedMethods . $blockedMethods . $offset

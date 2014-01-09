@@ -16,7 +16,7 @@
  // Catch the $_POST variables.
  $notification = $_POST;
  
-/*
+/**
  * The variabele $notification contains an array including 
  * the following keys.
  * 

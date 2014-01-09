@@ -27,14 +27,14 @@
  
  function sendNotification($request) {
 	
-	/*
+	/**
 	 * In SOAP it's possible that we send you multiple notifications
 	 * in one request. First we verify if the request the SOAP envelopes.
 	 */
 	if(isset($request->notification->notificationItems) && count($request->notification->notificationItems) >0)
 		foreach($request->notification->notificationItems as $notificationRequestItem){
 			
-			/*
+			/**
 			 * Each $notificationRequestItem contains the following fields:
 			 * $notificationRequestItem->amount->currency
 			 * $notificationRequestItem->amount->value
