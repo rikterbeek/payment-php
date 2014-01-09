@@ -1,16 +1,16 @@
 <?php
 /**
- * Cancel a Payment
- *
- * Similarly to the capture modification, in order to cancel an authorised (card) 
- * payment you send a modification request to the cancel action.
- * This file shows how an authorised payment should be canceled by sending 
- * a modification request using SOAP. 
+ * Cancel or Refund a Payment
+ * 
+ * If you do not know if the payment is captured but you want to reverse 
+ * the authorisation you can send a modification request to the cancelOrRefund action 
+ * This file shows how a payment can be cancelled or refunded by a 
+ * modification request using SOAP. 
  * 
  * Please note: using our API requires a web service user. 
  * Typically: ws@Company.YourCompanyCode
  *  
- * @link	https://github.com/JessePiscaer/payment-php/tree/master/4.Modificaitons/cancel-soap.php 
+ * @link	https://github.com/JessePiscaer/payment-php/tree/master/4.Modificaitons/cancel-or-refund-soap.php 
  * @author	Created by Adyen Payments
  */
  
@@ -36,15 +36,16 @@
 	)
  );
  
+ 
  /**
-  * Perform cancel request by sending in a 
+  * Perform cancel or refund request by sending in a 
   * modificationRequest, the protocol is defined 
   * in the WSDL. The following parameters are used:
   * - merchantAccount: The merchant account the payment was processed with.
   * - originalReference: This is the pspReference that was assigned to the authorisation
   */
  try{
-	 $result = $client->cancel(array(
+	 $result = $client->cancelorrefund(array(
 		"modificationRequest" => array(
 			"merchantAccount" => "YourMerchantAccount",
 			"originalReference" => "PspReferenceOfTheAuthorisedPayment",
@@ -52,13 +53,16 @@
 	);
 	
 	/**
-	 * If the message was syntactically valid and merchantAccount is correct you will 
-	 * receive a cancelReceived response with the following fields:
+	 * If the message was syntactically valid and merchantAccount is correct you will receive a
+	 * cancelOrRefundReceived response with the following fields:
 	 * - pspReference: A new reference to uniquely identify this modification request. 
-	 * - response: In case of success, this will be [cancel-received]. 
+	 * - response: In case of success, this will be [cancelOrRefund-received]. 
 	 *   In case of an error, we will return a SOAP Fault.
 	 * 
-	 * Please note: The result of the cancellation is sent via a notification with eventCode CANCELLATION.
+	 * If the payment is authorised, but not yet captured, it will be cancelled. 
+	 * In other cases the payment will be fully refunded (if possible).
+	 * 
+	 * Please note: The actual result of the cancel or refund is sent via a notification with eventCode CANCEL_OR_REFUND.
 	 */
 	print_r($result);
 						

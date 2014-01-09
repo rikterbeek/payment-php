@@ -42,7 +42,7 @@
  /**
   * Perform capture request by sending in a 
   * modificationRequest, the protocol is defined 
-  * in the WSDL. The following paramters are used:
+  * in the WSDL. The following parameters are used:
   * - merchantAccount: The merchant account the payment was processed with.
   * - modificationAmount: The amount to capture
   * 	- currency: the currency must match the original payment
@@ -63,6 +63,12 @@
 		)
 	);
 	
+	/**
+	 * The response. In case of success this will be [capture-received]. 
+	 * In case of an error, we will return a SOAP Fault.
+	 * 
+	 * Please note: The result of the capture is sent via a notification with eventCode CAPTURE.
+	 */ 
 	print_r($result);
 						
  }catch(SoapFault $ex){
