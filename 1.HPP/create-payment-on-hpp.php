@@ -37,7 +37,6 @@
   * $blockedMethods		: Blocked payment methods separeted with a , i.e. "ideal,mc,visa" (optional)
   * $offset				: Numeric value that will be added to the fraud score (optional)
   * $merchantSig		: The HMAC signature used by Adyen to test the validy of the form;
-
   */
     
   $merchantReference = "Test payment " . date("Y-m-d H:i:s");
@@ -80,21 +79,21 @@
   ))); 
 ?>
 <form method="POST" action="https://test.adyen.com/hpp/pay.shtml" target="_blank">
-	<input type="text" name="merchantReference" value="<?=$merchantReference ?>"/>
-	<input type="text" name="paymentAmount" value="<?=$paymentAmount ?>"/>
-	<input type="text" name="currencyCode" value="<?=$currencyCode ?>"/>
-	<input type="text" name="shipBeforeDate" value="<?=$shipBeforeDate ?>"/>
-	<input type="text" name="skinCode" value="<?=$skinCode ?>"/>
-	<input type="text" name="merchantAccount" value="<?=$merchantAccount ?>"/>
-	<input type="text" name="sessionValidity" value="<?=$sessionValidity ?>"/>
-	<input type="text" name="shopperLocale" value="<?=$shopperLocale ?>"/>
-	<input type="text" name="orderData" value="<?=$orderData ?>"/>
-	<input type="text" name="countryCode" value="<?=$countryCode ?>"/>
-	<input type="text" name="shopperEmail" value="<?=$shopperEmail ?>"/>
-	<input type="text" name="shopperReference" value="<?=$shopperReference ?>"/>
-	<input type="text" name="allowedMethods" value="<?=$allowedMethods ?>"/>
-	<input type="text" name="blockedMethods" value="<?=$blockedMethods ?>"/>
-	<input type="text" name="offset" value="<?=$offset ?>"/>
-	<input type="text" name="merchantSig" value="<?=$merchantSig ?>"/>
+	<input type="hidden" name="merchantReference" value="<?=$merchantReference ?>"/>
+	<input type="hidden" name="paymentAmount" value="<?=$paymentAmount ?>"/>
+	<input type="hidden" name="currencyCode" value="<?=$currencyCode ?>"/>
+	<input type="hidden" name="shipBeforeDate" value="<?=$shipBeforeDate ?>"/>
+	<input type="hidden" name="skinCode" value="<?=$skinCode ?>"/>
+	<input type="hidden" name="merchantAccount" value="<?=$merchantAccount ?>"/>
+	<input type="hidden" name="sessionValidity" value="<?=$sessionValidity ?>"/>
+	<input type="hidden" name="shopperLocale" value="<?=$shopperLocale ?>"/>
+	<input type="hidden" name="orderData" value="<?=$orderData ?>"/>
+	<input type="hidden" name="countryCode" value="<?=$countryCode ?>"/>
+	<input type="hidden" name="shopperEmail" value="<?=$shopperEmail ?>"/>
+	<input type="hidden" name="shopperReference" value="<?=$shopperReference ?>"/>
+	<input type="hidden" name="allowedMethods" value="<?=$allowedMethods ?>"/>
+	<input type="hidden" name="blockedMethods" value="<?=$blockedMethods ?>"/>
+	<input type="hidden" name="offset" value="<?=$offset ?>"/>
+	<input type="hidden" name="merchantSig" value="<?=$merchantSig ?>"/>
 	<input type="submit" value="Create payment" />
 </form>
