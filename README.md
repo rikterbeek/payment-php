@@ -43,6 +43,8 @@ your account such as merchant account and skincode.
     - request-recurring-contract.php    : Request a recurring contact for a shopper;
 6.PaymentMethods
   - get-payment-methods.php             : Get payment methods available for merchant account.
+7.OpenInvoice
+  - return-order-rows.php               : Implementing open invoice.
 ```
 ## Manuals
 The code examples are based on our [Integration manual](https://support.adyen.com/index.php?/Knowledgebase/Article/GetAttachment/1301/1287312) and the [API manual](https://support.adyen.com/index.php?/Knowledgebase/Article/GetAttachment/2102/1543852) which provides rich information on how our platform works. Please find our manuals on [support.adyen.com](support.adyen.com). 
