@@ -5,7 +5,7 @@ and read the brief explanation on how this repository is structured.
 
 ## Code structure
 ```
-1.HPP
+1.HPP (Hosted Payment Page)
   - create-payment-on-hpp.php           : Simple form creating a payment on our HPP;
   - create-payment-on-hpp-advanced.php  : Advanced form creating a payment on our HPP;
 2. API
@@ -31,6 +31,8 @@ and read the brief explanation on how this repository is structured.
     - create-recurring-payment.php      : Create a recurring payment;
     - disable-recurring-contract.php    : Disable a recurring contract for a shopper;
     - request-recurring-contract.php    : Request a recurring contact for a shopper;
+6.PaymentMethods
+  - get-payment-methods.php             : Get payment methods available for merchant account.
 ```
 ## Manuals
 The code examples are based on our Integration and API manual which provides rich information on how our platform works. Please find our manuals on [support.adyen.com](support.adyen.com). 
