@@ -12,7 +12,7 @@
  * Please note: using our API requires a web service user. 
  * Typically: ws@Company.YourCompanyCode
  *  
- * @link    https://github.com/JessePiscaer/payment-php/tree/master/4.Modificaitons/httppost/capture.php 
+ * @link    https://github.com/JessePiscaer/payment-php/tree/master/4.Modifications/httppost/capture.php 
  * @author  Created by Adyen Payments
  */
   
@@ -38,18 +38,16 @@
  $ch = curl_init();
  curl_setopt($ch, CURLOPT_URL, "https://pal-test.adyen.com/pal/adapter/httppost");
  curl_setopt($ch, CURLOPT_HEADER, false);
- curl_setopt($ch, CURLOPT_HTTPHEADER, array("Authorization: Basic " .base64_encode("YourWSUser".":"."YourWSUserPassword"))); 
- curl_setopt($ch, CURLOPT_POST,count($fields));
- curl_setopt($ch, CURLOPT_POSTFIELDS,$fields);
+ curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+ curl_setopt($ch, CURLOPT_USERPWD, "YourWSUser:YourWSUserPassword");
+ curl_setopt($ch, CURLOPT_POST,count($request));
+ curl_setopt($ch, CURLOPT_POSTFIELDS,$request);
   
  $result = curl_exec($ch);
   
  if($result === false)
     echo "Error: " . curl_error($ch);
- else{
-     
-     
-     
+ else
     print_r($result);
- }
+ 
  curl_close($ch);

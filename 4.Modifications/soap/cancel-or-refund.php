@@ -10,7 +10,7 @@
  * Please note: using our API requires a web service user. 
  * Typically: ws@Company.YourCompanyCode
  *  
- * @link	https://github.com/JessePiscaer/payment-php/tree/master/4.Modificaitons/cancel-or-refund-soap.php 
+ * @link	https://github.com/JessePiscaer/payment-php/tree/master/4.Modifications/soap/cancel-or-refund-soap.php 
  * @author	Created by Adyen Payments
  */
  

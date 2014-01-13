@@ -9,7 +9,7 @@
  * using a SOAP call or using HTTP POST parameters to a server of your choice. 
  * This file describes how SOAP notifcations can be received in PHP
  *  
- * @link	https://github.com/JessePiscaer/payment-php/tree/master/3.Notifications/notification_server-soap.php 
+ * @link	https://github.com/JessePiscaer/payment-php/tree/master/3.Notifications/soap/notification_server-soap.php 
  * @author	Created by Adyen Payments
  */
  

@@ -3,7 +3,7 @@
  * Create Payment On Hosted Payment Page (HPP) Advanced
  * 
  * The Adyen Hosted Payment Pages (HPPs) provide a flexible, secure 
- * and easy way to allow customers to pay for goods or services. Rather
+ * and easy way to allow shoppers to pay for goods or services. Rather
  * than submitting a simple request containing the required field
  * we offer a possibility to post even more variables to our HPP
  * This code example will show you which variables can be posted

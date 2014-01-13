@@ -23,8 +23,8 @@
   */
  $client = new SoapClient(
 	"https://pal-test.adyen.com/pal/Payment.wsdl", array(
-		"login" => "ws@Company.JessePiscaer", // YourWSUser
-		"password" => "GtrMU{mccv5R34pckSF7<Tdau", //YourWSUserPassword 
+		"login" => "YourWSUser", 
+		"password" => "YourWSUserPassword",  
 		"soap_version" => SOAP_1_1,
 		"style" => SOAP_DOCUMENT,
 		"encoding" => SOAP_LITERAL,
@@ -66,14 +66,14 @@
  try{
 	$result = $client->authorise(array(
 			"paymentRequest" => array(
-				"merchantAccount" => "JessePiscaerCOM", //YourMerchantAccount
+				"merchantAccount" => "YourMerchantAccount", 
 				"amount" => array(
 					"currency" => "EUR",
 					"value" => "199",
 				),
 				"reference" => "YourReference",
-				//"shopperIP" => "ShopperIPAddress",
-				//"shopperEmail" => "TheShopperEmailAddress",
+				"shopperIP" => "ShopperIPAddress",
+				"shopperEmail" => "TheShopperEmailAddress",
 				"shopperReference" => "YourReference",
 				"fraudOffset" => "0",
 				"card" => array(

@@ -148,7 +148,7 @@
 						<input type="hidden" name="PaReq" value="<?=$result->paymentResult->paRequest ?>" />
 						<input type="hidden" name="TermUrl" value="https://yourwebsite.com" />
 						<input type="hidden" name="MD" value="<?=$result->paymentResult->md ?>" />
-						<input type="submit" value="Continu 3D authentication"/>
+						<input type="submit" value="Continue to 3D authentication"/>
 					</form>
 				<?
 				

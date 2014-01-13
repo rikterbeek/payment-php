@@ -10,7 +10,12 @@ your account such as merchant account and skincode.
   - create-payment-on-hpp.php           : Simple form creating a payment on our HPP;
   - create-payment-on-hpp-advanced.php  : Advanced form creating a payment on our HPP;
 2. API
-  - create-payment-api.php              : Create an payment via our API;
+  - httppost
+  	- create-payment-api.php            : Create a payment via our API;
+  	- create-payment-3ds-api.php        : Create a 3D secure payment via our API;
+  - soap
+  	- create-payment-api.php            : Create a payment via our API;
+  	- create-payment-3ds-api.php        : Create a 3D secure payment via our API;
 3.Notifications
   - httppost
     - notification-server.php           : Receive our notifications using HTTP Post;
@@ -28,6 +33,10 @@ your account such as merchant account and skincode.
     - capture-soap.php                  : Capture a payment using SOAP;
     - refund-soap.php                   : Request a refund using SOAP;
 5.Recurring
+  - httppost
+    - create-recurring-payment.php      : Create a recurring payment;
+    - disable-recurring-contract.php    : Disable a recurring contract for a shopper;
+    - request-recurring-contract.php    : Request a recurring contact for a shopper;
   - soap
     - create-recurring-payment.php      : Create a recurring payment;
     - disable-recurring-contract.php    : Disable a recurring contract for a shopper;
@@ -36,8 +45,7 @@ your account such as merchant account and skincode.
   - get-payment-methods.php             : Get payment methods available for merchant account.
 ```
 ## Manuals
-The code examples are based on our [https://support.adyen.com/index.php?/Knowledgebase/Article/GetAttachment/1301/1287312](Integration manual) and the
-[https://support.adyen.com/index.php?/Knowledgebase/Article/GetAttachment/2102/1543852](API manual) which provides rich information on how our platform works. Please find our manuals on [support.adyen.com](support.adyen.com). 
+The code examples are based on our [Integration manual](https://support.adyen.com/index.php?/Knowledgebase/Article/GetAttachment/1301/1287312) and the [API manual](https://support.adyen.com/index.php?/Knowledgebase/Article/GetAttachment/2102/1543852) which provides rich information on how our platform works. Please find our manuals on [support.adyen.com](support.adyen.com). 
 
 ## Support
 If you do have any suggestions or questions regarding the code examples please send an e-mail to github@adyen.com.

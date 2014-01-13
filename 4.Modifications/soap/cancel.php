@@ -10,7 +10,7 @@
  * Please note: using our API requires a web service user. 
  * Typically: ws@Company.YourCompanyCode
  *  
- * @link	https://github.com/JessePiscaer/payment-php/tree/master/4.Modificaitons/cancel-soap.php 
+ * @link	https://github.com/JessePiscaer/payment-php/tree/master/4.Modifications/soap/cancel.php 
  * @author	Created by Adyen Payments
  */
  
@@ -24,8 +24,7 @@
   * - $options[login] = Your WS user;
   * - $options[password] = Your WS user's password.
   */
-
- 
+  
   $client = new SoapClient(
 	"https://pal-test.adyen.com/pal/Payment.wsdl", array(
 		"login" => "YourWSUser", 
