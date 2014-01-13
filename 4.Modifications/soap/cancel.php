@@ -24,9 +24,11 @@
   * - $options[login] = Your WS user;
   * - $options[password] = Your WS user's password.
   */
- $client = new SoapClient(
+
+ 
+  $client = new SoapClient(
 	"https://pal-test.adyen.com/pal/Payment.wsdl", array(
-		"login" => "YourWSUser",
+		"login" => "YourWSUser", 
 		"password" => "YourWSUserPassword", 
 		"soap_version" => SOAP_1_1,
 		"style" => SOAP_DOCUMENT,
@@ -49,7 +51,8 @@
 			"merchantAccount" => "YourMerchantAccount",
 			"originalReference" => "PspReferenceOfTheAuthorisedPayment",
 		)
-	);
+	));
+
 	
 	/**
 	 * If the message was syntactically valid and merchantAccount is correct you will 
@@ -64,6 +67,6 @@
 						
  }catch(SoapFault $ex){
 	 print("<pre>");
-	 print($exception);
+	 print($ex);
 	 print("<pre>");
  }

@@ -8,7 +8,7 @@
  * will be created for the shopper.  
  * 
  * @link	https://github.com/JessePiscaer/payment-php/tree/master/1.HPP/create-payment-on-hpp.php 
- * @author	Created by Adyen Payments
+ * @author	Created by Adyen
  */
  
  /**
@@ -28,7 +28,7 @@
   * $sessionValidity	: The final time by which a payment needs to have been made. 
   * 					  Format: YYYY-MM-DDThh:mm:ssTZD
   * $shopperLocale		: A combination of language code and country code to specify 
-  * 					  the language used in th e session
+  * 					  the language used in the session i.e. en_GB.
   * $orderData 			: A fragment of HTML/text that will be displayed on the HPP (optional)
   * $countryCode		: Country code according to ISO_3166-1_alpha-2 standard  (optional)
   * $shopperEmail		: The e-mailaddress of the shopper (optional)
@@ -74,8 +74,7 @@
   
   $merchantSig = base64_encode(pack("H*",$cryptHMAC->hash(
 	$paymentAmount . $currencyCode . $shipBeforeDate . $merchantReference . $skinCode . $merchantAccount . 
-	$sessionValidity . $shopperEmail . $shopperReference . 
-	$allowedMethods . $blockedMethods . $offset
+	$sessionValidity . $shopperEmail . $shopperReference . $allowedMethods . $blockedMethods . $offset
   ))); 
 ?>
 <form method="POST" action="https://test.adyen.com/hpp/pay.shtml" target="_blank">
@@ -94,6 +93,6 @@
 	<input type="hidden" name="allowedMethods" value="<?=$allowedMethods ?>"/>
 	<input type="hidden" name="blockedMethods" value="<?=$blockedMethods ?>"/>
 	<input type="hidden" name="offset" value="<?=$offset ?>"/>
-	<input type="hidden" name="merchantSig" value="<?=$merchantSig ?>"/>
+	<input type="hidden" name="merchantSig" value="<?=$merchantSig ?>"/>	
 	<input type="submit" value="Create payment" />
 </form>

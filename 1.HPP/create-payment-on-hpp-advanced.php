@@ -10,7 +10,7 @@
  * and why.
  * 
  * @link	https://github.com/JessePiscaer/payment-php/tree/master/1.HPP/create-payment-on-hpp-advanced.php 
- * @author	Created by Adyen Payments
+ * @author	Created by Adyen
  */
  
  /**
@@ -30,14 +30,22 @@
   * $sessionValidity	: The final time by which a payment needs to have been made. 
   * 					  Format: YYYY-MM-DDThh:mm:ssTZD
   * $shopperLocale		: A combination of language code and country code to specify 
-  * 					  the language used in th e session
+  * 					  the language used in the session i.e. en_GB.
   * $orderData 			: A fragment of HTML/text that will be displayed on the HPP (optional)
   * $countryCode		: Country code according to ISO_3166-1_alpha-2 standard  (optional)
   * $shopperEmail		: The e-mailaddress of the shopper (optional)
   * $shopperReference	: The shopper reference, i.e. the shopper ID (optional)
+  * $recurringContract	: Can be "ONECLICK","RECURRING" or "ONECLICK,RECURRING", this allows you to store
+  * 					  the payment details as a ONECLICK and/or RECURRING contract.
   * $allowedMethods		: Allowed payment methods separeted with a , i.e. "ideal,mc,visa" (optional)
   * $blockedMethods		: Blocked payment methods separeted with a , i.e. "ideal,mc,visa" (optional)
+  * $shopperStatement	: To submit a variable shopper statement you can set the shopperStatement field in the payment request.
+  * $merchantReturnData	: This field willl be passed back as-is on the return URL when the shopper completes (or abandons) the 
+  * 					  payment and returns to your shop.
   * $offset				: Numeric value that will be added to the fraud score (optional)
+  * $brandCode			: The payment method the shopper likes to pay with, i.e. ideal
+  * $issuerId			: If brandCode specifies a redirect payment method, the issuer can be 
+  * 					  defined here forcing the HPP to redirect directly to the payment method.
   * $merchantSig		: The HMAC signature used by Adyen to test the validy of the form;
   */
     
@@ -53,9 +61,18 @@
   $countryCode = "NL"; 
   $shopperEmail = "";
   $shopperReference = ""; 
+  $recurringContract = "";
   $allowedMethods = ""; 
   $blockedMethods = ""; 
+  $shopperStatement = "";
+  $merchantReturnData = "";
   $offset = ""; 
+  
+  // By providing the brandCode and issuerId the HPP will redirect the shopper
+  // directly to the redirect payment method. Please note: the form should be posted
+  // to https://test.adyen.com/hpp/details.shtml rather than pay.shtml. 
+  $brandCode = "";
+  $issuerId = "";
   
   /**
    * Collecting Shopper Information
@@ -67,7 +84,7 @@
    * 
    * 1. Billing address;
    * - billingAddress.street: The street name
-   * - billingAddress.houseNumberOrName
+   * - billingAddress.houseNumberOrName: The house number
    * - billingAddress.city: The city.
    * - billingAddress.postalCode: The postal/zip code.
    * - billingAddress.stateOrProvince: The state or province.
@@ -77,7 +94,7 @@
    * 
    * 2. Delivery address;
    * - deliveryAddress.street: The street name
-   * - deliveryAddress.houseNumberOrName
+   * - deliveryAddress.houseNumberOrName: The house number
    * - deliveryAddress.city: The city.
    * - deliveryAddress.postalCode: The postal/zip code.
    * - deliveryAddress.stateOrProvince: The state or province.
@@ -153,12 +170,12 @@
   // HMAC Key is a shared secret KEY used to encrypt the signature, this can be configured in the skin. 
   $hmacKey = "YourHmacSecretKey";
   $cryptHMAC = new Crypt_HMAC($hmacKey, "sha1");
-  
+
   // Compute the merchantSig
   $merchantSig = base64_encode(pack("H*",$cryptHMAC->hash(
 	$paymentAmount . $currencyCode . $shipBeforeDate . $merchantReference . $skinCode . $merchantAccount .
-	$sessionValidity . $shopperEmail . $shopperReference . /*$recurringContract .*/  
-	$allowedMethods . $blockedMethods /*$shopperStatement . $merchantReturnData*/  . 
+	$sessionValidity . $shopperEmail . $shopperReference . $recurringContract .  
+	$allowedMethods . $blockedMethods . $shopperStatement . $merchantReturnData . 
 	$shopperInfo['billing']['billingAddressType'] . $shopperInfo['delivery']['deliveryAddressType'] . 
 	$shopperInfo['shopper']['shopperType'] . $offset
   ))); 
@@ -209,9 +226,14 @@
 	<input type="hidden" name="countryCode" value="<?=$countryCode ?>"/>
 	<input type="hidden" name="shopperEmail" value="<?=$shopperEmail ?>"/>
 	<input type="hidden" name="shopperReference" value="<?=$shopperReference ?>"/>
+	<input type="hidden" name="recurringContract" value="<?=$recurringContract ?>"/>
 	<input type="hidden" name="allowedMethods" value="<?=$allowedMethods ?>"/>
 	<input type="hidden" name="blockedMethods" value="<?=$blockedMethods ?>"/>
+	<input type="hidden" name="shopperStatement" value="<?=$shopperStatement ?>"/>
+	<input type="hidden" name="merchantReturnData" value="<?=$merchantReturnData ?>"/>
 	<input type="hidden" name="offset" value="<?=$offset ?>"/>
+	<input type="hidden" name="brandCode" value="<?=$brandCode ?>"/>
+	<input type="hidden" name="issuerId" value="<?=$issuerId ?>"/>
 	
 	<!-- Billing address -->
 	<input type="hidden" name="billingAddress.street" value="<?=$shopperInfo['billing']['billingAddress.street'] ?>"/>

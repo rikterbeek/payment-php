@@ -61,7 +61,7 @@
 			"originalReference" => "PspReferenceOfTheAuthorisedPayment",
 			"reference" => "YourReference"
 		)
-	);
+	));
 	
 	/**
 	 * The response. In case of success this will be [capture-received]. 
@@ -73,6 +73,6 @@
 						
  }catch(SoapFault $ex){
 	 print("<pre>");
-	 print($exception);
+	 print($ex);
 	 print("<pre>");
  }

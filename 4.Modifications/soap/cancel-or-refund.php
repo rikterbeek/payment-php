@@ -50,7 +50,7 @@
 			"merchantAccount" => "YourMerchantAccount",
 			"originalReference" => "PspReferenceOfTheAuthorisedPayment",
 		)
-	);
+	));
 	
 	/**
 	 * If the message was syntactically valid and merchantAccount is correct you will receive a
@@ -68,6 +68,6 @@
 						
  }catch(SoapFault $ex){
 	 print("<pre>");
-	 print($exception);
+	 print($ex);
 	 print("<pre>");
  }

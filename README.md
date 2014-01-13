@@ -1,7 +1,8 @@
 Adyen PHP Integration
 ==============
-Code examples in this reposity help you integrate with the Adyen platform using PHP. Please go through the code examples 
-and read the brief explanation on how this repository is structured.
+The code examples in this reposity help you integrate with the Adyen platform using PHP. Please go through the code examples 
+and read the documentation in the files itself. Each code example requires you to change some parameters to connect to 
+your account such as merchant account and skincode.    
 
 ## Code structure
 ```
@@ -35,7 +36,8 @@ and read the brief explanation on how this repository is structured.
   - get-payment-methods.php             : Get payment methods available for merchant account.
 ```
 ## Manuals
-The code examples are based on our Integration and API manual which provides rich information on how our platform works. Please find our manuals on [support.adyen.com](support.adyen.com). 
+The code examples are based on our [https://support.adyen.com/index.php?/Knowledgebase/Article/GetAttachment/1301/1287312](Integration manual) and the
+[https://support.adyen.com/index.php?/Knowledgebase/Article/GetAttachment/2102/1543852](API manual) which provides rich information on how our platform works. Please find our manuals on [support.adyen.com](support.adyen.com). 
 
 ## Support
 If you do have any suggestions or questions regarding the code examples please send an e-mail to github@adyen.com.
