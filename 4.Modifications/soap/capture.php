@@ -64,7 +64,7 @@
 	));
 	
 	/**
-	 * The response. In case of success this will be [capture-received]. 
+	 * The response. You will receive a confirmation that we received your request: [capture-received]. 
 	 * In case of an error, we will return a SOAP Fault.
 	 * 
 	 * Please note: The result of the capture is sent via a notification with eventCode CAPTURE.

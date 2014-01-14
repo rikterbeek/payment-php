@@ -56,7 +56,7 @@
 	 * If the message was syntactically valid and merchantAccount is correct you will receive a
 	 * cancelOrRefundReceived response with the following fields:
 	 * - pspReference: A new reference to uniquely identify this modification request. 
-	 * - response: In case of success, this will be [cancelOrRefund-received]. 
+	 * - response: This will be a confirmation: [cancelOrRefund-received]. 
 	 *   In case of an error, we will return a SOAP Fault.
 	 * 
 	 * If the payment is authorised, but not yet captured, it will be cancelled. 

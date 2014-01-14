@@ -11,8 +11,6 @@
  * @link	https://github.com/JessePiscaer/payment-php/tree/master/2.API/soap/create-payment-api.php 
  * @author	Created by Adyen Payments
  */
- libxml_disable_entity_loader(false);
- ini_set("soap.wsdl_cache_enabled", "0");
 
  /**
   * Create SOAP Client
@@ -29,7 +27,8 @@
 		"style" => SOAP_DOCUMENT,
 		"encoding" => SOAP_LITERAL,
 		"trace" => 1,
-		"classmap" => array()
+		"classmap" => array(),
+		"cache_wsdl" => WSDL_CACHE_BOTH
 	)
  );
  
