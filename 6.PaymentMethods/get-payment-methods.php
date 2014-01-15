@@ -46,7 +46,7 @@
  curl_setopt($ch, CURLOPT_URL, "https://test.adyen.com/hpp/directory.shtml");
  curl_setopt($ch, CURLOPT_HEADER, false);
  curl_setopt($ch, CURLOPT_POST,count($request));
- curl_setopt($ch, CURLOPT_POSTFIELDS,$request);
+ curl_setopt($ch, CURLOPT_POSTFIELDS,http_build_query($request));
  
  $result = curl_exec($ch);
  
