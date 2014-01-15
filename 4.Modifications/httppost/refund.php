@@ -9,7 +9,7 @@
  * Please note: using our API requires a web service user. 
  * Typically: ws@Company.YourCompanyCode
  *  
- * @link    https://github.com/JessePiscaer/payment-php/tree/master/4.Modificaitons/httppost/refund.php 
+ * @link    4.Modifications/httppost/refund.php 
  * @author  Created by Adyen Payments
  */
    
