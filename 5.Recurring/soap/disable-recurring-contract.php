@@ -38,7 +38,7 @@
   * the protocol is defined in the WSDL. The following parameters are used:
   * - merchantAccount: The merchant account the payment was processed with.
   * - shopperReference: The reference to the shopper. This shopperReference must be the same as the 
-  *   shopperReference used in the initial payment. modificationAmount: The amount to capture
+  *   shopperReference used in the initial payment. 
   * - recurringDetailReference: The recurringDetailReference of the details you wish to 
   *   disable. If you do not supply this field all details for the shopper will be disabled including 
   *   the contract! This means that you can not add new details anymore.

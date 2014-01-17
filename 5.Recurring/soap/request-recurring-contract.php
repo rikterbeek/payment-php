@@ -38,7 +38,7 @@
   * RecurringDetailsRequest this protocol is defined in the WSDL. The following parameters are used:
   * - merchantAccount: The merchant account the payment was processed with.
   * - shopperReference: The reference to the shopper. This shopperReference must be the same as the 
-  *   shopperReference used in the initial payment. modificationAmount: The amount to capture
+  *   shopperReference used in the initial payment.
   * - recurring->contract: This should be the same value as recurringContract in the payment where the recurring
   *   contract was created. However if ONECLICK,RECURRING was specified initially
   *   then this field can be either ONECLICK or RECURRING.
@@ -50,7 +50,7 @@
 				"merchantAccount" => "YourMerchantAccount",
 				"shopperReference" => "TheShopperreference",
 	            "recurring"=> array(
-					"contract" => "ONECLICK,RECURRING" // i.e.: "ONECLICK","RECURRING" or "ONECLICK,RECURRING"
+					"contract" => "RECURRING" // i.e.: "ONECLICK","RECURRING" or "ONECLICK,RECURRING"
 				) 
 			)
 		)

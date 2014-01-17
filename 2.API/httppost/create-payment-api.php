@@ -1,19 +1,22 @@
 <?php
 /**
- * Create Payment through the API using HTTP POST
+ * Create Payment through the API (HTTP Post)
  * 
+ * Payments can be created through our API, however this is only possible if you are
+ * PCI Compliant. HTTP Post payments are submitted using the Payment.authorise action. 
+ * We will explain a simple credit card submission. 
  * 
- * Please note: using our API requires a web service user. 
- * Typically: ws@Company.YourCompanyCode
+ * Please note: using our API requires a web service user. Set up your Webservice 
+ * user: Adyen Test CA >> Settings >> Users >> ws@Company. >> Generate Password >> Submit 
  *  
  * @link	2.API/httppost/create-payment-api.php 
- * @author	Created by Adyen Payments
+ * @author	Created by Adyen
  */ 
  
   /**
   * A payment can be submitted by sending a PaymentRequest 
-  * to the authorise action, the request should contain the following
-  * variables:
+  * to the authorise action of the web service, the request should 
+  * contain the following variables:
   * 
   * - merchantAccount: The merchant account the payment was processed with.
   * - amount: The amount of the payment
@@ -23,7 +26,6 @@
   * - shopperIP: The IP address of the shopper (optional/recommended)
   * - shopperEmail: The e-mail address of the shopper 
   * - shopperReference: The shopper reference, i.e. the shopper ID
-  * - shopperInteraction: ContAuth for RECURRING or Ecommerce for ONECLICK 
   * - fraudOffset: Numeric value that will be added to the fraud score (optional)
   * - card
   * 	- billingAddress: we advice you to submit billingAddress data if available for risk checks;
@@ -42,10 +44,10 @@
   
  $request = array(
     "action" => "Payment.authorise",
-    "paymentRequest.merchantAccount" => "YourMerchantAccount", 
+    "paymentRequest.merchantAccount" => "JessePiscaerCOM", //YourMerchantAccount  
 	"paymentRequest.amount.currency" => "EUR",
 	"paymentRequest.amount.value" => "199",
-	"paymentRequest.reference" => "YourReference",
+	"paymentRequest.reference" => "Test payment " . date("Y-m-d H:i:s"),
 	"paymentRequest.shopperIP" => "ShopperIPAddress",
 	"paymentRequest.shopperEmail" => "TheShopperEmailAddress",
 	"paymentRequest.shopperReference" => "YourReference",
@@ -69,7 +71,7 @@
  curl_setopt($ch, CURLOPT_URL, "https://pal-test.adyen.com/pal/adapter/httppost");
  curl_setopt($ch, CURLOPT_HEADER, false); 
  curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC  );
- curl_setopt($ch, CURLOPT_USERPWD, "YourWSUser:YourWSUserPassword"); 
+ curl_setopt($ch, CURLOPT_USERPWD, "ws@Company.JessePiscaer:GtrMU{mccv5R34pckSF7<Tdau"); //YourWSUser:YourWSUserPassword  
  curl_setopt($ch, CURLOPT_POST,count($request));
  curl_setopt($ch, CURLOPT_POSTFIELDS,http_build_query($request));
  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

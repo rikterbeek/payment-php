@@ -41,7 +41,7 @@
   * variables:
   * 
   * - selectedRecurringDetailReference: The recurringDetailReference you want to use for this payment. 
-  *   The value LATEST can be used to select the most recently used recurring detail.
+  *   The value LATEST can be used to select the most recently created recurring detail.
   * - recurring: This should be the same value as recurringContract in the payment where the recurring 
   *   contract was created. However if ONECLICK,RECURRING was specified initially
   *   then this field can be either ONECLICK or RECURRING.
@@ -82,7 +82,7 @@
 	 
 	/**
 	 * If the recurring payment message passes validation a risk analysis will be done and, depending on the
-	 * outcome, an authorisation will be attempted. This is not applicable to One-Click payments. You receive a
+	 * outcome, an authorisation will be attempted. You receive a
 	 * payment response with the following fields:
 	 * - pspReference: The reference we assigned to the payment;
 	 * - resultCode: The result of the payment. One of Authorised, Refused or Error;

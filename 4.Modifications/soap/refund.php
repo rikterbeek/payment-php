@@ -6,32 +6,28 @@
  * to the refund action of the WSDL. This file shows how a settled payment 
  * can be refunded by a modification request using SOAP. 
  * 
- * Please note: using our API requires a web service user. 
- * Typically: ws@Company.YourCompanyCode
+ * Please note: using our API requires a web service user. Set up your Webservice 
+ * user: Adyen Test CA >> Settings >> Users >> ws@Company. >> Generate Password >> Submit 
  *  
- * @link	https://github.com/JessePiscaer/payment-php/tree/master/4.Modifications/soap/refund.php 
+ * @link	4.Modifications/soap/refund.php 
  * @author	Created by Adyen Payments
  */
  
- libxml_disable_entity_loader(false);
- ini_set("soap.wsdl_cache_enabled", "0");
- 
  /**
-  * Create SOAP Client
-  * new SoapClient($wsdl,$options)
+  * Create SOAP Client = new SoapClient($wsdl,$options)
   * - $wsdl points to the wsdl you are using;
   * - $options[login] = Your WS user;
   * - $options[password] = Your WS user's password.
-  */
- $client = new SoapClient(
+  * - $options[cache_wsdl] = WSDL_CACHE_BOTH, we advice 
+  *   to cache the WSDL since we usually never change it.
+  */  
+  $client = new SoapClient(
 	"https://pal-test.adyen.com/pal/Payment.wsdl", array(
-		"login" => "YourWSUser",
-		"password" => "YourWSUserPassword", 
-		"soap_version" => SOAP_1_1,
+		"login" => "YourWSUser",   
+		"password" => "YourWSUserPassword",   
 		"style" => SOAP_DOCUMENT,
 		"encoding" => SOAP_LITERAL,
-		"trace" => 1,
-		"classmap" => array()
+		"cache_wsdl" => WSDL_CACHE_BOTH
 	)
  );
  
@@ -64,8 +60,7 @@
 	 * If the message was syntactically valid and merchantAccount is correct you will 
 	 * receive a refundReceived response with the following fields:
 	 * - pspReference: A new reference to uniquely identify this modification request. 
-	 * - response: In case of success, this will be [refund-received]. 
-	 *   In case of an error, we will return a SOAP Fault.
+	 * - response: A confirmation indicating we receievd the request: [refund-received]. 
 	 * 
 	 * Please note: The result of the refund is sent via a notification with eventCode REFUND.
 	 */

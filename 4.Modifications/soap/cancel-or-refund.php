@@ -7,35 +7,30 @@
  * This file shows how a payment can be cancelled or refunded by a 
  * modification request using SOAP. 
  * 
- * Please note: using our API requires a web service user. 
- * Typically: ws@Company.YourCompanyCode
+ * Please note: using our API requires a web service user. Set up your Webservice 
+ * user: Adyen Test CA >> Settings >> Users >> ws@Company. >> Generate Password >> Submit 
  *  
- * @link	https://github.com/JessePiscaer/payment-php/tree/master/4.Modifications/soap/cancel-or-refund-soap.php 
+ * @link	4.Modifications/soap/cancel-or-refund-soap.php 
  * @author	Created by Adyen Payments
  */
  
- libxml_disable_entity_loader(false);
- ini_set("soap.wsdl_cache_enabled", "0");
- 
  /**
-  * Create SOAP Client
-  * new SoapClient($wsdl,$options)
+  * Create SOAP Client = new SoapClient($wsdl,$options)
   * - $wsdl points to the wsdl you are using;
   * - $options[login] = Your WS user;
   * - $options[password] = Your WS user's password.
-  */
- $client = new SoapClient(
+  * - $options[cache_wsdl] = WSDL_CACHE_BOTH, we advice 
+  *   to cache the WSDL since we usually never change it.
+  */  
+  $client = new SoapClient(
 	"https://pal-test.adyen.com/pal/Payment.wsdl", array(
-		"login" => "YourWSUser",
-		"password" => "YourWSUserPassword", 
-		"soap_version" => SOAP_1_1,
+		"login" => "YourWSUser",   
+		"password" => "YourWSUserPassword",    
 		"style" => SOAP_DOCUMENT,
 		"encoding" => SOAP_LITERAL,
-		"trace" => 1,
-		"classmap" => array()
+		"cache_wsdl" => WSDL_CACHE_BOTH
 	)
  );
- 
  
  /**
   * Perform cancel or refund request by sending in a 
@@ -56,8 +51,7 @@
 	 * If the message was syntactically valid and merchantAccount is correct you will receive a
 	 * cancelOrRefundReceived response with the following fields:
 	 * - pspReference: A new reference to uniquely identify this modification request. 
-	 * - response: This will be a confirmation: [cancelOrRefund-received]. 
-	 *   In case of an error, we will return a SOAP Fault.
+	 * - response: A confirmation indicating we receievd the request: [cancelOrRefund-received]. 
 	 * 
 	 * If the payment is authorised, but not yet captured, it will be cancelled. 
 	 * In other cases the payment will be fully refunded (if possible).

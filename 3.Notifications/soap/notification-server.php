@@ -1,26 +1,36 @@
 <?php
 /**
- * Receive notifcations from Adyen ysing SOAP
+ * Receive notifcations from Adyen using SOAP
  * 
- * Whenever a payment is made or a modification is processed we will 
- * notify you of the event and whether or not it was performed successfully. 
+ * Whenever a payment is made, a modification is processed or a report is
+ * available we will notify you. The notifications tell you for instance if
+ * an authorisation was performed successfully. 
  * Notifications should be used to keep your backoffice systems up to date with
  * the status of each payment and modification. Notifications are sent 
- * using a SOAP call or using HTTP POST parameters to a server of your choice. 
- * This file describes how SOAP notifcations can be received in PHP
+ * using a SOAP call or using HTTP POST to a server of your choice. 
+ * This file describes how SOAP notifcations can be received in PHP.
  *  
- * @link	https://github.com/JessePiscaer/payment-php/tree/master/3.Notifications/soap/notification_server-soap.php 
- * @author	Created by Adyen Payments
+ * @link	3.Notifications/soap/notification_server.php 
+ * @author	Created by Adyen
  */
- 
- ini_set("soap.wsdl_cache_enabled", "0"); 
- 
+  
  /**
   * Create a SoapServer which implements the SOAP protocol used by Adyen and 
   * implement the sendNotification action in order to call a function handling
   * the notification.
-  */
- $server = new SoapServer("https://ca-test.adyen.com/ca/services/Notification?wsdl"); 
+  * 
+  * new SoapServer($wsdl,$options)
+  * - $wsdl points to the wsdl you are using;
+  * - $options[cache_wsdl] = WSDL_CACHE_BOTH, we advice 
+  *   to cache the WSDL since we usually never change it.
+  */  
+ $server = new SoapServer(
+	"https://ca-test.adyen.com/ca/services/Notification?wsdl", array(
+		"style" => SOAP_DOCUMENT,
+		"encoding" => SOAP_LITERAL,
+		"cache_wsdl" => WSDL_CACHE_BOTH
+	)
+ ); 
  $server->addFunction("sendNotification"); 
  $server->handle();
  
@@ -61,58 +71,62 @@
 				
 				case 'AUTHORISATION':
 						// Handle AUTHORISATION notification.
+						// Confirms that the payment was authorised successfully. 
 					break;
 					
 				case 'CANCELLATION':
 						// Handle CANCELLATION notification.
+						// Confirms that the payment was cancelled successfully. 
 					break;
 					
 				case 'REFUND':
 						// Handle REFUND notification.
+						// Confirms that the payment was refunded successfully. 
 					break;
 					
 				case 'CANCEL_OR_REFUND':
 						// Handle CANCEL_OR_REFUND notification.
+						// Confirms that the payment was refunded or cancelled successfully. 
 					break;
 					
 				case 'CAPTURE':
 						// Handle CAPTURE notification.
+						// Confirms that the payment was successfully captured. 
 					break;
 					
 				case 'REFUNDED_REVERSED':
 						// Handle REFUNDED_REVERSED notification.
+						// Tells you that the refund for this payment was successfully reversed. 
 					break;
 					
 				case 'CAPTURE_FAILED':
 						// Handle AUTHORISATION notification.
+						// Tells you that the capture on the authorised payment failed. 
 					break;
-					
-				case 'CAPTURE_FAILED':
-						// Handle AUTHORISATION notification.
-					break;
-					
+							
 				case 'REQUEST_FOR_INFORMATION':
 						// Handle REQUEST_FOR_INFORMATION notification.
+						// When there is a dispute you are requested to provide information for the specific payment. 
 					break;
 					
 				case 'NOTIFICATION_OF_CHARGEBACK':
 						// Handle NOTIFICATION_OF_CHARGEBACK notification.
-					break;
-			
-				case 'ADVICE_OF_DEBIT':
-						// Handle ADVICE_OF_DEBIT notification.
+						// Let's you know that someone has issued a chargeback
 					break;
 					
 				case 'CHARGEBACK':
 						// Handle CHARGEBACK notification.
+						// Let's you know that money for this payment was chargebacked. 
 					break;
 				
 				case 'CHARGEBACK_REVERSED':
 						// Handle CHARGEBACK_REVERSED notification.
+						// Notifies you that the chargeback for this payment was reversed. 
 					break;
 				
 				case 'REPORT_AVAILABLE':
 						// Handle REPORT_AVAILABLE notification.
+						// There is a new report available, the URL of the report is in the "reason" field.
 					break;
 			}
 		}
@@ -123,7 +137,7 @@
 	  * return [accepted] to us, this is essential to let us 
 	  * know that you received the notification. If we do NOT receive
 	  * [accepted] we try to send the notification again which
-	  * will put all other notification in a que.
+	  * will put all other notification in a queue.
 	  */
 	 return array("notificationResponse" => "[accepted]");
  } 

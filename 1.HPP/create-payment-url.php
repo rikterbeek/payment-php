@@ -4,8 +4,10 @@
  * 
  * The Adyen Hosted Payment Pages (HPPs) provide a flexible, secure 
  * and easy way to allow shoppers to pay for goods or services. This
- * example shows a page which creates a payment through a GET url.
+ * example shows a page which creates a payment by a URL. The link provided
+ * by this example can for instance be send by e-mail to create a payment. 
  * 
+ * @link	1.HPP/create-payment-url.php 
  * @author	Created by Adyen
  */
  
@@ -17,7 +19,7 @@
   * The variables that you can post to the HPP are the following:
   * 
   * $merchantReference	: The merchant reference is your reference for the payment
-  * $paymentAmount		: Amount specified in minor units $1,00 = 100
+  * $paymentAmount		: Amount specified in minor units EUR 1,00 = 100
   * $currencyCode		: The three-letter capitalised ISO currency code to pay in i.e. EUR
   * $shipBeforeDate		: The date by which the goods or services are shipped.
   * 					  Format: YYYY-MM-DD;
@@ -42,7 +44,7 @@
 	"paymentAmount" => "199",
 	"currencyCode" => "EUR",	
 	"shipBeforeDate" => date("Y-m-d",strtotime("+3 days")),
-	"skinCode" => "YourSkinCode",
+	"skinCode" => "YourSkinCode", 
 	"merchantAccount" => "YourMerchantAccount",
 	"sessionValidity" => date("c",strtotime("+1 days")),
 	"shopperLocale" => "en_US",
@@ -69,8 +71,9 @@
    */ 
   require_once "../lib/HMAC.php";
   
-  // HMAC Key is a shared secret KEY used to encrypt the signature, this can be configured in the skin. 
-  $hmacKey = "YourHmacSecretKey"; 
+  // HMAC Key is a shared secret KEY used to encrypt the signature. Set up the HMAC 
+  // key: Adyen Test CA >> Skins >> Choose your Skin >> Edit Tab >> Edit HMAC key for Test and Live 
+  $hmacKey = "YourHmacSecretKey";  
   $cryptHMAC = new Crypt_HMAC($hmacKey, "sha1");
   
   $merchantSig = base64_encode(pack("H*",$cryptHMAC->hash(
@@ -80,9 +83,9 @@
    
   $request["merchantSig"] = $merchantSig; 
   
-  // Since this is a going to be a query, make sure + gets properly converted.
+  // sessionValidity needs encoding to replace the + which is processed as a space rather than a +.
   $request['sessionValidity'] = urlencode($request['sessionValidity']);
-      
+    
   $url = "https://test.adyen.com/hpp/pay.shtml?";
   foreach($request as $field => $value)
 	$url .= "&".$field."=".$value;

@@ -1,21 +1,43 @@
 <?php
 /**
- * Create Payment through the API and handle 3DS
+ * Create Payment through the API using a 3D secure enrolled card
  * 
- * SOAP API payments are submitted using the authorise3d action. We will explain a credit 
- * card enables in 3D secure submission. Please note that for 3D secure transaction
- * it is required to submit browserInfo to the Adyen server. Also, access to the authorise 
- * action in the API requires you to be PCI compliant and will be enabled after 
- * you have provided us with the proper documentation. 
+ * Payments can be created through our API, however this is only possible if you are
+ * PCI Compliant. SOAP API payments are submitted using the authorise action. 
+ * We will explain how a 3D secure enabled creditcard can be processed through the API. 
+ * 3D secure transactionit is required to submit browserInfo to the Adyen server. 
  * 
- * Please note: using our API requires a web service user. 
- * Typically: ws@Company.YourCompanyCode
+ * Please note: using our API requires a web service user. Set up your Webservice 
+ * user: Adyen Test CA >> Settings >> Users >> ws@Company. >> Generate Password >> Submit 
+ * 
+ * @link	2.API/soap/create-payment-api-3ds.php 
+ * @author	Created by Adyen
+ * 
+ * How does a 3D secure transaction work?
+ * 1. 3D secure should be enabled for your account, please contact Adyen suppor to set it up;
+ * 2. Submit a regular payment request through the authorise action providing browserInfo of the shopper;
+ * 3. If 3D secure enabled, Adyen will check if the card is enabled for 3D secure;
+ * 4. If the card is NOT enrolled you will receive a normal response. If the card is enabled
+ *    you will receive the following extra fields: 
+ * 		- paRequest: The 3D secure request for the issuer;
+ * 		- md: The payment session;
+ * 		- issuerUrl: The URL to redirect the shopper to;
+ * 		- resultCode: The resultcode will be RedirectShopper, requiring you to redirect the shopper.
+ * 5. A request should be posted to the issuerUrl to redirect the shopper. The following fields should be send:
+ * 		- PaReq: The received paRequest in step 4;
+ * 		- MD: The md received in step 4;
+ * 		- TermUrl: the return URL that the shopper will be redirected to after issuer authentication;
+ * 6. The shopper authenticates at the issuer;
+ * 7. After authentication the shopper will be redirected using a POST request to the TermUrl;
+ * 8. To complete the payment request you have to submit a payment using the authorise3d action using the following fields:
+ * 		- merchantAccount: Should be the same merchant account as the origial request;
+ * 		- browserInfo: It is safe to use the values from the original authorise request;
+ *		- md: The value of the MD parameter received from the issuer (MD);
+ * 		- paResponse: The value of the PaRes parameter received from the issuer (PaRes);
+ * 		- shopperIP: We recommend you sending in the shopper IP.
+ * 9. Finally, the response on the authorise3d request contains a regular repsone with a resultCode.
  *  
- * @link	https://github.com/JessePiscaer/payment-php/tree/master/2.API/soap/create-payment-api-3ds.php 
- * @author	Created by Adyen Payments
  */
- libxml_disable_entity_loader(false);
- ini_set("soap.wsdl_cache_enabled", "0");
 
  /**
   * Create SOAP Client
@@ -23,22 +45,25 @@
   * - $wsdl points to the wsdl you are using;
   * - $options[login] = Your WS user;
   * - $options[password] = Your WS user's password.
+  * - $options[cache_wsdl] = WSDL_CACHE_BOTH, we advice 
+  *   to cache the WSDL since we usually never change it.
   */
  $client = new SoapClient(
 	"https://pal-test.adyen.com/pal/Payment.wsdl", array(
-		"login" => "YourWSUser", 
-		"password" => "YourWSUserPassword",
+		"login" => "YourWSUser",  
+		"password" => "YourWSUserPassword",  
 		"soap_version" => SOAP_1_1,
 		"style" => SOAP_DOCUMENT,
 		"encoding" => SOAP_LITERAL,
 		"trace" => 1,
-		"classmap" => array()
+		"classmap" => array(),
+		"cache_wsdl" => WSDL_CACHE_BOTH
 	)
  );
  
  /**
   * A payment can be submitted by sending a PaymentRequest 
-  * to the authorise3d action, the request should contain the following
+  * to the authorise action, the request should contain the following
   * variables:
   * 
   * - merchantAccount: The merchant account the payment was processed with.
@@ -72,12 +97,12 @@
 
 	$result = $client->authorise(array(
 			"paymentRequest" => array(
-				"merchantAccount" => "YourMerchantAccount", 
+				"merchantAccount" => "JessePiscaerCOM", //YourMerchantAccount
 				"amount" => array(
 					"currency" => "EUR",
 					"value" => "199",
 				),
-				"reference" => "Test payment",
+				"reference" => "Test payment " . date("Y-m-d H:i:s"),
 				"shopperIP" => "ShopperIPAddress", 
 				"shopperEmail" => "TheShopperEmailAddress", 
 				"shopperReference" => "YourReference",
@@ -121,11 +146,8 @@
 	 * - issuerUrl: The url the shopper should be redirected to
 	 * - md: The payment session.
 	 * - paRequest: The 3-D request data for the issuer.
-	 * - 
 	 */ 
-	
-	print_r($result);
-	
+	 
 	switch($result->paymentResult->resultCode){
 		
 		case "Authorised":
@@ -144,9 +166,13 @@
 				// Handle RedirectShopper transaction. Submit the details
 				// to the issuerUrl to continue the 3D authentication.
 				?>
-					<form method="POST" action="<?=$result->paymentResult->issuerUrl ?>" id="3dform">
+					<pre>
+						<? print_r($result); ?>
+					</pre>
+					
+					<form method="POST" action="<?=$result->paymentResult->issuerUrl ?>" id="3dform" target="_blank">
 						<input type="hidden" name="PaReq" value="<?=$result->paymentResult->paRequest ?>" />
-						<input type="hidden" name="TermUrl" value="https://yourwebsite.com" />
+						<input type="hidden" name="TermUrl" value="http://speeltuin.jessepiscaer.com/notifications-httppost.php" />
 						<input type="hidden" name="MD" value="<?=$result->paymentResult->md ?>" />
 						<input type="submit" value="Continue to 3D authentication"/>
 					</form>

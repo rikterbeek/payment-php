@@ -1,41 +1,40 @@
 <?php
 /**
- * Create Payment through the API
+ * Create Payment through the API (SOAP)
  * 
- * SOAP API payments are submitted using the authorise action. We will explain a simple credit 
- * card submission.
+ * Payments can be created through our API, however this is only possible if you are
+ * PCI Compliant. SOAP API payments are submitted using the authorise action. 
+ * We will explain a simple credit card submission. 
  * 
- * Please note: using our API requires a web service user. 
- * Typically: ws@Company.YourCompanyCode
+ * Please note: using our API requires a web service user. Set up your Webservice 
+ * user: Adyen Test CA >> Settings >> Users >> ws@Company. >> Generate Password >> Submit 
  *  
- * @link	https://github.com/JessePiscaer/payment-php/tree/master/2.API/soap/create-payment-api.php 
- * @author	Created by Adyen Payments
+ * @link	2.API/soap/create-payment-api.php 
+ * @author	Created by Adyen
  */
 
  /**
-  * Create SOAP Client
-  * new SoapClient($wsdl,$options)
+  * Create SOAP Client = new SoapClient($wsdl,$options)
   * - $wsdl points to the wsdl you are using;
   * - $options[login] = Your WS user;
   * - $options[password] = Your WS user's password.
+  * - $options[cache_wsdl] = WSDL_CACHE_BOTH, we advice 
+  *   to cache the WSDL since we usually never change it.
   */
  $client = new SoapClient(
 	"https://pal-test.adyen.com/pal/Payment.wsdl", array(
-		"login" => "YourWSUser", 
+		"login" => "YourWSUser",  
 		"password" => "YourWSUserPassword",  
-		"soap_version" => SOAP_1_1,
 		"style" => SOAP_DOCUMENT,
 		"encoding" => SOAP_LITERAL,
-		"trace" => 1,
-		"classmap" => array(),
 		"cache_wsdl" => WSDL_CACHE_BOTH
 	)
  );
  
  /**
   * A payment can be submitted by sending a PaymentRequest 
-  * to the authorise action, the request should contain the following
-  * variables:
+  * to the authorise action of the web service, the request should 
+  * contain the following variables:
   * 
   * - merchantAccount: The merchant account the payment was processed with.
   * - amount: The amount of the payment
@@ -45,7 +44,6 @@
   * - shopperIP: The IP address of the shopper (optional/recommended)
   * - shopperEmail: The e-mail address of the shopper 
   * - shopperReference: The shopper reference, i.e. the shopper ID
-  * - shopperInteraction: ContAuth for RECURRING or Ecommerce for ONECLICK 
   * - fraudOffset: Numeric value that will be added to the fraud score (optional)
   * - card
   * 	- billingAddress: we advice you to submit billingAddress data if available for risk checks;
@@ -70,7 +68,7 @@
 					"currency" => "EUR",
 					"value" => "199",
 				),
-				"reference" => "YourReference",
+				"reference" => "Test payment " . date("Y-m-d H:i:s"),
 				"shopperIP" => "ShopperIPAddress",
 				"shopperEmail" => "TheShopperEmailAddress",
 				"shopperReference" => "YourReference",

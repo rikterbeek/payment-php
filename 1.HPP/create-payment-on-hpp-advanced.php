@@ -4,12 +4,12 @@
  * 
  * The Adyen Hosted Payment Pages (HPPs) provide a flexible, secure 
  * and easy way to allow shoppers to pay for goods or services. Rather
- * than submitting a simple request containing the required field
- * we offer a possibility to post even more variables to our HPP
+ * than submitting a simple request containing the required fields
+ * we offer a possibility to post even more variables to our HPP.
  * This code example will show you which variables can be posted
  * and why.
  * 
- * @link	https://github.com/JessePiscaer/payment-php/tree/master/1.HPP/create-payment-on-hpp-advanced.php 
+ * @link	1.HPP/create-payment-on-hpp-advanced.php 
  * @author	Created by Adyen
  */
  
@@ -21,7 +21,7 @@
   * The variables that you can post to the HPP are the following:
   * 
   * $merchantReference	: The merchant reference is your reference for the payment
-  * $paymentAmount		: Amount specified in minor units $1,00 = 100
+  * $paymentAmount		: Amount specified in minor units EUR 1,00 = 100
   * $currencyCode		: The three-letter capitalised ISO currency code to pay in i.e. EUR
   * $shipBeforeDate		: The date by which the goods or services are shipped.
   * 					  Format: YYYY-MM-DD;
@@ -31,21 +31,22 @@
   * 					  Format: YYYY-MM-DDThh:mm:ssTZD
   * $shopperLocale		: A combination of language code and country code to specify 
   * 					  the language used in the session i.e. en_GB.
-  * $orderData 			: A fragment of HTML/text that will be displayed on the HPP (optional)
+  * $orderData 			: A fragment of HTML/text that will be displayed on the HPP, for example to show the basked (optional)
   * $countryCode		: Country code according to ISO_3166-1_alpha-2 standard  (optional)
   * $shopperEmail		: The e-mailaddress of the shopper (optional)
   * $shopperReference	: The shopper reference, i.e. the shopper ID (optional)
   * $recurringContract	: Can be "ONECLICK","RECURRING" or "ONECLICK,RECURRING", this allows you to store
-  * 					  the payment details as a ONECLICK and/or RECURRING contract.
+  * 					  the payment details as a ONECLICK and/or RECURRING contract. Please
+  * 					  view the recurring examples in the repository as well. 
   * $allowedMethods		: Allowed payment methods separeted with a , i.e. "ideal,mc,visa" (optional)
   * $blockedMethods		: Blocked payment methods separeted with a , i.e. "ideal,mc,visa" (optional)
   * $shopperStatement	: To submit a variable shopper statement you can set the shopperStatement field in the payment request.
   * $merchantReturnData	: This field willl be passed back as-is on the return URL when the shopper completes (or abandons) the 
-  * 					  payment and returns to your shop.
+  * 					  payment and returns to your shop. (optional)
   * $offset				: Numeric value that will be added to the fraud score (optional)
-  * $brandCode			: The payment method the shopper likes to pay with, i.e. ideal
+  * $brandCode			: The payment method the shopper likes to pay with, i.e. ideal (optional)
   * $issuerId			: If brandCode specifies a redirect payment method, the issuer can be 
-  * 					  defined here forcing the HPP to redirect directly to the payment method.
+  * 					  defined here forcing the HPP to redirect directly to the payment method. (optional)
   * $merchantSig		: The HMAC signature used by Adyen to test the validy of the form;
   */
     
@@ -70,7 +71,8 @@
   
   // By providing the brandCode and issuerId the HPP will redirect the shopper
   // directly to the redirect payment method. Please note: the form should be posted
-  // to https://test.adyen.com/hpp/details.shtml rather than pay.shtml. 
+  // to https://test.adyen.com/hpp/details.shtml rather than pay.shtml. While posting
+  // to details.shtml countryCode becomes a required as well.  
   $brandCode = "";
   $issuerId = "";
   
@@ -88,7 +90,7 @@
    * - billingAddress.city: The city.
    * - billingAddress.postalCode: The postal/zip code.
    * - billingAddress.stateOrProvince: The state or province.
-   * - billingAddress.country: The country in ISO 3166-1 alpha-2 format. 
+   * - billingAddress.country: The country in ISO 3166-1 alpha-2 format i.e. NL. 
    * - billingAddressType: You can specify whether the shopper is allowed to view and/or modify these personal details.
    * - billingAddressSig: A separate merchant signature that is required for these fields. 
    * 
@@ -98,7 +100,7 @@
    * - deliveryAddress.city: The city.
    * - deliveryAddress.postalCode: The postal/zip code.
    * - deliveryAddress.stateOrProvince: The state or province.
-   * - deliveryAddress.country: The country in ISO 3166-1 alpha-2 format. 
+   * - deliveryAddress.country: The country in ISO 3166-1 alpha-2 format i.e. NL. 
    * - deliveryAddressType: You can specify whether the shopper is allowed to view and/or modify these personal details.
    * - deliveryAddressSig: A separate merchant signature that is required for these fields. 
    * 
@@ -167,7 +169,8 @@
    */ 
   require_once "../lib/HMAC.php";
   
-  // HMAC Key is a shared secret KEY used to encrypt the signature, this can be configured in the skin. 
+  // HMAC Key is a shared secret KEY used to encrypt the signature. Set up the HMAC 
+  // key: Adyen Test CA >> Skins >> Choose your Skin >> Edit Tab >> Edit HMAC key for Test and Live 
   $hmacKey = "YourHmacSecretKey";
   $cryptHMAC = new Crypt_HMAC($hmacKey, "sha1");
 
