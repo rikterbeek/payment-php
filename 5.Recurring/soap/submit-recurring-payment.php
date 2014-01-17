@@ -1,37 +1,33 @@
 <?php
 /**
- * Submit recurring Payment
+ * Submit Recurring Payment using SOAP
  * 
  * You can submit a recurring payment using a specific recurringDetails record or by using the last created
  * recurringDetails record. The request for the recurring payment is done using a paymentRequest.
- * This file shows how a recurring payment can be submitted using our API.
+ * This file shows how a recurring payment can be submitted using our SOAP API. 
  * 
- * Please note: using our API requires a web service user. 
- * Typically: ws@Company.YourCompanyCode
+ * Please note: using our API requires a web service user. Set up your Webservice 
+ * user: Adyen Test CA >> Settings >> Users >> ws@Company. >> Generate Password >> Submit 
  *  
- * @link	https://github.com/JessePiscaer/payment-php/tree/master/5.Recurring/soap/submit-recurring-payment.php 
- * @author	Created by Adyen Payments
+ * @link	5.Recurring/httppost/submit-recurring-payment.php 
+ * @author	Created by Adyen
  */
  
- libxml_disable_entity_loader(false);
- ini_set("soap.wsdl_cache_enabled", "0");
- 
- /**
-  * Create SOAP Client
-  * new SoapClient($wsdl,$options)
+/**
+  * Create SOAP Client = new SoapClient($wsdl,$options)
   * - $wsdl points to the wsdl you are using;
   * - $options[login] = Your WS user;
   * - $options[password] = Your WS user's password.
-  */
+  * - $options[cache_wsdl] = WSDL_CACHE_BOTH, we advice 
+  *   to cache the WSDL since we usually never change it.
+  */  
  $client = new SoapClient(
 	"https://pal-test.adyen.com/pal/Payment.wsdl", array(
-		"login" => "YourWSUser",
-		"password" => "YourWSUserPassword", 
-		"soap_version" => SOAP_1_1,
+		"login" => "YourWSUser",    
+		"password" => "YourWSUserPassword",   
 		"style" => SOAP_DOCUMENT,
 		"encoding" => SOAP_LITERAL,
-		"trace" => 1,
-		"classmap" => array()
+		"cache_wsdl" => WSDL_CACHE_BOTH
 	)
  );
  
@@ -60,18 +56,18 @@
  try{
 	$result = $client->authorise(array(
 			"paymentRequest" => array(
-				"selectedRecurringDetailReference" => "TheSelectedRecurringDetailReferenceContract",
+				"selectedRecurringDetailReference" => "TheSelectedRecurringDetailReferenceContract", 
 				"recurring" => array(
-					"contract" => "ONECLICK,RECURRING" // i.e.: "ONECLICK","RECURRING" or "ONECLICK,RECURRING"
+					"contract" => "RECURRING" // i.e.: "ONECLICK","RECURRING" or "ONECLICK,RECURRING"
 				),
 				"merchantAccount" => "YourMerchantAccount",
 				"amount" => array(
 					"currency" => "EUR",
 					"value" => "199",
 				),
-				"reference" => "YourReference",
-				"shopperEmail" => "ShopperEmailAddress",
-				"shopperReference" => "ShopperReference",
+				"reference" => "TEST-RECURRING-PAYMENT-" . date("Y-m-d-H:i:s"),
+				"shopperEmail" => "ShopperEmailAddress", 
+				"shopperReference" => "ShopperReference", 
 				"shopperInteraction" => "ContAuth", // ContAuth for RECURRING or Ecommerce for ONECLICK 
 				"fraudOffset" => "0",
 				"shopperIP" => "ShopperIPAddress",
@@ -93,6 +89,6 @@
 						
  }catch(SoapFault $ex){
 	 print("<pre>");
-	 print($exception);
+	 print($ex);
 	 print("<pre>");
  }

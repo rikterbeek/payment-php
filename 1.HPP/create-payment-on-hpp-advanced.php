@@ -36,7 +36,8 @@
   * $shopperEmail		: The e-mailaddress of the shopper (optional)
   * $shopperReference	: The shopper reference, i.e. the shopper ID (optional)
   * $recurringContract	: Can be "ONECLICK","RECURRING" or "ONECLICK,RECURRING", this allows you to store
-  * 					  the payment details as a ONECLICK and/or RECURRING contract. Please
+  * 					  the payment details as a ONECLICK and/or RECURRING contract. Please note that if you supply
+  * 					  recurringContract, shopperEmail and shopperReference become mandatory. Please
   * 					  view the recurring examples in the repository as well. 
   * $allowedMethods		: Allowed payment methods separeted with a , i.e. "ideal,mc,visa" (optional)
   * $blockedMethods		: Blocked payment methods separeted with a , i.e. "ideal,mc,visa" (optional)
@@ -50,7 +51,7 @@
   * $merchantSig		: The HMAC signature used by Adyen to test the validy of the form;
   */
     
-  $merchantReference = "Test payment " . date("Y-m-d H:i:s");
+  $merchantReference = "TEST-PAYMENT-" . date("Y-m-d-H:i:s");
   $paymentAmount = 199; 	
   $currencyCode = "EUR";	
   $shipBeforeDate = date("Y-m-d",strtotime("+3 days")); 
@@ -179,40 +180,40 @@
 	$paymentAmount . $currencyCode . $shipBeforeDate . $merchantReference . $skinCode . $merchantAccount .
 	$sessionValidity . $shopperEmail . $shopperReference . $recurringContract .  
 	$allowedMethods . $blockedMethods . $shopperStatement . $merchantReturnData . 
-	$shopperInfo['billing']['billingAddressType'] . $shopperInfo['delivery']['deliveryAddressType'] . 
-	$shopperInfo['shopper']['shopperType'] . $offset
+	$shopperInfo["billing"]["billingAddressType"] . $shopperInfo["delivery"]["deliveryAddressType"] . 
+	$shopperInfo["shopper"]["shopperType"] . $offset
   ))); 
   
   // Compute the billingSig
   $billingSig = base64_encode(pack("H*",$cryptHMAC->hash(
-	$shopperInfo['billing']['billingAddress.street'] .
-	$shopperInfo['billing']['billingAddress.houseNumberOrName'] .
-	$shopperInfo['billing']['billingAddress.city'] .
-	$shopperInfo['billing']['billingAddress.postalCode'] .
-	$shopperInfo['billing']['billingAddress.stateOrProvince'] .
-	$shopperInfo['billing']['billingAddress.country']
+	$shopperInfo["billing"]["billingAddress.street"] .
+	$shopperInfo["billing"]["billingAddress.houseNumberOrName"] .
+	$shopperInfo["billing"]["billingAddress.city"] .
+	$shopperInfo["billing"]["billingAddress.postalCode"] .
+	$shopperInfo["billing"]["billingAddress.stateOrProvince"] .
+	$shopperInfo["billing"]["billingAddress.country"]
   )));
   
   // Compute the deliverySig
   $deliveryAddressSig = base64_encode(pack("H*",$cryptHMAC->hash(
-	$shopperInfo['delivery']['deliveryAddress.street'] .
-	$shopperInfo['delivery']['deliveryAddress.houseNumberOrName'] .
-	$shopperInfo['delivery']['deliveryAddress.city'] .
-	$shopperInfo['delivery']['deliveryAddress.postalCode'] .
-	$shopperInfo['delivery']['deliveryAddress.stateOrProvince'] .
-	$shopperInfo['delivery']['deliveryAddress.country']
+	$shopperInfo["delivery"]["deliveryAddress.street"] .
+	$shopperInfo["delivery"]["deliveryAddress.houseNumberOrName"] .
+	$shopperInfo["delivery"]["deliveryAddress.city"] .
+	$shopperInfo["delivery"]["deliveryAddress.postalCode"] .
+	$shopperInfo["delivery"]["deliveryAddress.stateOrProvince"] .
+	$shopperInfo["delivery"]["deliveryAddress.country"]
   )));
   
   // Compute the shopperSig
   $shopperSig = base64_encode(pack("H*",$cryptHMAC->hash(
-	$shopperInfo['shopper']['shopper.firstName'] .
-	$shopperInfo['shopper']['shopper.infix'] .
-	$shopperInfo['shopper']['shopper.lastName'] .
-	$shopperInfo['shopper']['shopper.gender'] .
-	$shopperInfo['shopper']['shopper.dateOfBirthDayOfMonth'] .
-	$shopperInfo['shopper']['shopper.dateOfBirthMonth'] . 
-	$shopperInfo['shopper']['shopper.dateOfBirthYear'] . 
-	$shopperInfo['shopper']['shopper.telephoneNumber']
+	$shopperInfo["shopper"]["shopper.firstName"] .
+	$shopperInfo["shopper"]["shopper.infix"] .
+	$shopperInfo["shopper"]["shopper.lastName"] .
+	$shopperInfo["shopper"]["shopper.gender"] .
+	$shopperInfo["shopper"]["shopper.dateOfBirthDayOfMonth"] .
+	$shopperInfo["shopper"]["shopper.dateOfBirthMonth"] . 
+	$shopperInfo["shopper"]["shopper.dateOfBirthYear"] . 
+	$shopperInfo["shopper"]["shopper.telephoneNumber"]
   )));
 
 ?>
@@ -239,33 +240,33 @@
 	<input type="hidden" name="issuerId" value="<?=$issuerId ?>"/>
 	
 	<!-- Billing address -->
-	<input type="hidden" name="billingAddress.street" value="<?=$shopperInfo['billing']['billingAddress.street'] ?>"/>
-	<input type="hidden" name="billingAddress.houseNumberOrName" value="<?=$shopperInfo['billing']['billingAddress.houseNumberOrName'] ?>"/>
-	<input type="hidden" name="billingAddress.city" value="<?=$shopperInfo['billing']['billingAddress.city'] ?>"/>
-	<input type="hidden" name="billingAddress.postalCode" value="<?=$shopperInfo['billing']['billingAddress.postalCode'] ?>"/>
-	<input type="hidden" name="billingAddress.stateOrProvince" value="<?=$shopperInfo['billing']['billingAddress.stateOrProvince'] ?>"/>
-	<input type="hidden" name="billingAddress.country" value="<?=$shopperInfo['billing']['billingAddress.country'] ?>"/>
-	<input type="hidden" name="billingAddressType" value="<?=$shopperInfo['billing']['billingAddressType'] ?>"/>
+	<input type="hidden" name="billingAddress.street" value="<?=$shopperInfo["billing"]["billingAddress.street"] ?>"/>
+	<input type="hidden" name="billingAddress.houseNumberOrName" value="<?=$shopperInfo["billing"]["billingAddress.houseNumberOrName"] ?>"/>
+	<input type="hidden" name="billingAddress.city" value="<?=$shopperInfo["billing"]["billingAddress.city"] ?>"/>
+	<input type="hidden" name="billingAddress.postalCode" value="<?=$shopperInfo["billing"]["billingAddress.postalCode"] ?>"/>
+	<input type="hidden" name="billingAddress.stateOrProvince" value="<?=$shopperInfo["billing"]["billingAddress.stateOrProvince"] ?>"/>
+	<input type="hidden" name="billingAddress.country" value="<?=$shopperInfo["billing"]["billingAddress.country"] ?>"/>
+	<input type="hidden" name="billingAddressType" value="<?=$shopperInfo["billing"]["billingAddressType"] ?>"/>
 	
 	<!-- Delivery address -->
-	<input type="hidden" name="deliveryAddress.street" value="<?=$shopperInfo['delivery']['deliveryAddress.street'] ?>"/>
-	<input type="hidden" name="deliveryAddress.houseNumberOrName" value="<?=$shopperInfo['delivery']['deliveryAddress.houseNumberOrName'] ?>"/>
-	<input type="hidden" name="deliveryAddress.city" value="<?=$shopperInfo['delivery']['deliveryAddress.city'] ?>"/>
-	<input type="hidden" name="deliveryAddress.postalCode" value="<?=$shopperInfo['delivery']['deliveryAddress.postalCode'] ?>"/>
-	<input type="hidden" name="deliveryAddress.stateOrProvince" value="<?=$shopperInfo['delivery']['deliveryAddress.stateOrProvince'] ?>"/>
-	<input type="hidden" name="deliveryAddress.country" value="<?=$shopperInfo['delivery']['deliveryAddress.country'] ?>"/>
-	<input type="hidden" name="deliveryAddressType" value="<?=$shopperInfo['delivery']['deliveryAddressType'] ?>"/>
+	<input type="hidden" name="deliveryAddress.street" value="<?=$shopperInfo["delivery"]["deliveryAddress.street"] ?>"/>
+	<input type="hidden" name="deliveryAddress.houseNumberOrName" value="<?=$shopperInfo["delivery"]["deliveryAddress.houseNumberOrName"] ?>"/>
+	<input type="hidden" name="deliveryAddress.city" value="<?=$shopperInfo["delivery"]["deliveryAddress.city"] ?>"/>
+	<input type="hidden" name="deliveryAddress.postalCode" value="<?=$shopperInfo["delivery"]["deliveryAddress.postalCode"] ?>"/>
+	<input type="hidden" name="deliveryAddress.stateOrProvince" value="<?=$shopperInfo["delivery"]["deliveryAddress.stateOrProvince"] ?>"/>
+	<input type="hidden" name="deliveryAddress.country" value="<?=$shopperInfo["delivery"]["deliveryAddress.country"] ?>"/>
+	<input type="hidden" name="deliveryAddressType" value="<?=$shopperInfo["delivery"]["deliveryAddressType"] ?>"/>
 	
 	<!-- Shopper -->
-	<input type="hidden" name="shopper.firstName" value="<?=$shopperInfo['shopper']['shopper.firstName'] ?>"/>
-	<input type="hidden" name="shopper.infix" value="<?=$shopperInfo['shopper']['shopper.infix'] ?>"/>
-	<input type="hidden" name="shopper.lastName" value="<?=$shopperInfo['shopper']['shopper.lastName'] ?>"/>
-	<input type="hidden" name="shopper.gender" value="<?=$shopperInfo['shopper']['shopper.gender'] ?>"/>
-	<input type="hidden" name="shopper.dateOfBirthDayOfMonth" value="<?=$shopperInfo['shopper']['shopper.dateOfBirthDayOfMonth'] ?>"/>
-	<input type="hidden" name="shopper.dateOfBirthMonth" value="<?=$shopperInfo['shopper']['shopper.dateOfBirthMonth'] ?>"/>
-	<input type="hidden" name="shopper.dateOfBirthYear" value="<?=$shopperInfo['shopper']['shopper.dateOfBirthYear'] ?>"/>
-	<input type="hidden" name="shopper.telephoneNumber" value="<?=$shopperInfo['shopper']['shopper.telephoneNumber'] ?>"/>
-	<input type="hidden" name="shopperType" value="<?=$shopperInfo['shopper']['shopperType'] ?>"/>
+	<input type="hidden" name="shopper.firstName" value="<?=$shopperInfo["shopper"]["shopper.firstName"] ?>"/>
+	<input type="hidden" name="shopper.infix" value="<?=$shopperInfo["shopper"]["shopper.infix"] ?>"/>
+	<input type="hidden" name="shopper.lastName" value="<?=$shopperInfo["shopper"]["shopper.lastName"] ?>"/>
+	<input type="hidden" name="shopper.gender" value="<?=$shopperInfo["shopper"]["shopper.gender"] ?>"/>
+	<input type="hidden" name="shopper.dateOfBirthDayOfMonth" value="<?=$shopperInfo["shopper"]["shopper.dateOfBirthDayOfMonth"] ?>"/>
+	<input type="hidden" name="shopper.dateOfBirthMonth" value="<?=$shopperInfo["shopper"]["shopper.dateOfBirthMonth"] ?>"/>
+	<input type="hidden" name="shopper.dateOfBirthYear" value="<?=$shopperInfo["shopper"]["shopper.dateOfBirthYear"] ?>"/>
+	<input type="hidden" name="shopper.telephoneNumber" value="<?=$shopperInfo["shopper"]["shopper.telephoneNumber"] ?>"/>
+	<input type="hidden" name="shopperType" value="<?=$shopperInfo["shopper"]["shopperType"] ?>"/>
 		
 	<!-- Signatures -->
 	<input type="hidden" name="billingSig" value="<?=$billingSig ?>"/>

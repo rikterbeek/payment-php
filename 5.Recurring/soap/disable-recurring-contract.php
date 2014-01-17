@@ -1,55 +1,53 @@
 <?php
 /**
- * Disable recurring contract
+ * Disable recurring contract using SOAP
  * 
+ * Disabling a recurring contract (detail) can be done by calling the disable action 
+ * on the Recurring service with a request. This file shows how you can disable
+ * a recurring contract using SOAP. 
  * 
- * Please note: using our API requires a web service user. 
- * Typically: ws@Company.YourCompanyCode
+ * Please note: using our API requires a web service user. Set up your Webservice 
+ * user: Adyen Test CA >> Settings >> Users >> ws@Company. >> Generate Password >> Submit 
  *  
- * @link	https://github.com/JessePiscaer/payment-php/tree/master/5.Recurring/soap/disable-recurring-contract.php 
- * @author	Created by Adyen Payments
+ * @link	5.Recurring/soap/disable-recurring-contract.php 
+ * @author	Created by Adyen
  */
  
- libxml_disable_entity_loader(false);
- ini_set("soap.wsdl_cache_enabled", "0");
- 
- /**
-  * Create SOAP Client
-  * new SoapClient($wsdl,$options)
-  * - $wsdl points to the wsdl you are using;
-  * - $options[login] = Your WS user;
-  * - $options[password] = Your WS user's password.
-  */
- $client = new SoapClient(
+/**
+ * Create SOAP Client = new SoapClient($wsdl,$options)
+ * - $wsdl points to the wsdl you are using;
+ * - $options[login] = Your WS user;
+ * - $options[password] = Your WS user's password.
+ * - $options[cache_wsdl] = WSDL_CACHE_BOTH, we advice 
+ *   to cache the WSDL since we usually never change it.
+ */  
+  $client = new SoapClient(
 	"https://pal-test.adyen.com/pal/Recurring.wsdl", array(
-		"login" => "YourWSUser",
-		"password" => "YourWSUserPassword", 
-		"soap_version" => SOAP_1_1,
+		"login" => "YourWSUser",   
+		"password" => "YourWSUserPassword",   
 		"style" => SOAP_DOCUMENT,
 		"encoding" => SOAP_LITERAL,
-		"trace" => 1,
-		"classmap" => array()
+		"cache_wsdl" => WSDL_CACHE_BOTH
 	)
  );
- 
- 
- /**
-  * Disable a recurring contract by sending a DisableRequest,
-  * the protocol is defined in the WSDL. The following parameters are used:
-  * - merchantAccount: The merchant account the payment was processed with.
-  * - shopperReference: The reference to the shopper. This shopperReference must be the same as the 
-  *   shopperReference used in the initial payment. 
-  * - recurringDetailReference: The recurringDetailReference of the details you wish to 
-  *   disable. If you do not supply this field all details for the shopper will be disabled including 
-  *   the contract! This means that you can not add new details anymore.
-  */
+
+/**
+ * The request should contain the following variables:
+ * - action: Specifies which action on the API is required 
+ * - merchantAccount: The merchant account the payment was processed with.
+ * - shopperReference: The reference to the shopper. This shopperReference must be the same as the 
+ *   shopperReference used in the initial payment. 
+ * - recurringDetailReference: The recurringDetailReference of the details you wish to 
+ *   disable. If you do not supply this field all details for the shopper will be disabled 
+ *   including the contract! This means that you can not add new details anymore.
+ */
  try{
 	 
 	$result = $client->disable(array(
 			"request" => array(
 				"merchantAccount" => "YourMerchantAccount",
-				"shopperReference" => "TheShopperreference",
-				"recurringDetailReference" => "TheReferenceToTheContract",
+				"shopperReference" => "TheShopperreference", 
+				"recurringDetailReference" => "TheReferenceToTheContract",	
 			)
 		)
 	);

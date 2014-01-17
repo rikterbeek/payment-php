@@ -39,7 +39,7 @@
   * $merchantSig		: The HMAC signature used by Adyen to test the validy of the form;
   */
     
-  $merchantReference = "Test payment " . date("Y-m-d H:i:s");
+  $merchantReference = "TEST-PAYMENT-" . date("Y-m-d-H:i:s");
   $paymentAmount = 199; 	
   $currencyCode = "EUR";	
   $shipBeforeDate = date("Y-m-d",strtotime("+3 days")); 

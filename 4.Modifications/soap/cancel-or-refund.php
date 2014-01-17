@@ -1,6 +1,6 @@
 <?php
 /**
- * Cancel or Refund a Payment
+ * Cancel or Refund a Payment using SOAP
  * 
  * If you do not know if the payment is captured but you want to reverse 
  * the authorisation you can send a modification request to the cancelOrRefund action 

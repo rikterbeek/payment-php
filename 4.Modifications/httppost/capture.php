@@ -1,6 +1,6 @@
 <?php
 /**
- * Capture a Payment
+ * Capture a Payment using HTTP Post
  * 
  * Authorised (card) payments can be captured to charge the shopper. 
  * Payments can be automatically captured by our platform. A payment can
@@ -9,8 +9,8 @@
  * shows how an authorised payment should be captured by sending 
  * a modification request using HTTP Post. 
  * 
- * Please note: using our API requires a web service user. 
- * Typically: ws@Company.YourCompanyCode
+ * Please note: using our API requires a web service user. Set up your Webservice 
+ * user: Adyen Test CA >> Settings >> Users >> ws@Company. >> Generate Password >> Submit 
  *  
  * @link    4.Modifications/httppost/capture.php 
  * @author  Created by Adyen Payments

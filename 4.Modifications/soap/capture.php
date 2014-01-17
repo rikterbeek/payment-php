@@ -1,6 +1,6 @@
 <?php
 /**
- * Capture a Payment
+ * Capture a Payment using SOAP
  * 
  * Authorised (card) payments can be captured to get the money from the shopper. 
  * Payments can be automatically captured by our platform. A payment can

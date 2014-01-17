@@ -1,14 +1,14 @@
 <?php
 /**
- * Cancel a Payment
+ * Cancel a Payment using HTTP Post
  * 
  * Similarly to the capture modification, in order to cancel an authorised (card) 
  * payment you send a modification request to the cancel action.
  * This file shows how an authorised payment should be canceled by sending 
  * a modification request using HTTP Post. 
  * 
- * Please note: using our API requires a web service user. 
- * Typically: ws@Company.YourCompanyCode
+ * Please note: using our API requires a web service user. Set up your Webservice 
+ * user: Adyen Test CA >> Settings >> Users >> ws@Company. >> Generate Password >> Submit 
  *  
  * @link    4.Modifications/httppost/cancel.php 
  * @author  Created by Adyen Payments

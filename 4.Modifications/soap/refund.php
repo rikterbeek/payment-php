@@ -1,6 +1,6 @@
 <?php
 /**
- * Refund a Payment
+ * Refund a Payment using SOAP
  * 
  * Settled payments can be refunded by sending a modifiction request
  * to the refund action of the WSDL. This file shows how a settled payment 

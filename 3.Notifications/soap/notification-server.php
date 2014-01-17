@@ -34,7 +34,6 @@
  $server->addFunction("sendNotification"); 
  $server->handle();
  
- 
  function sendNotification($request) {
 	
 	/**
@@ -69,65 +68,66 @@
 			
 			switch($notificationRequestItem->eventCode){
 				
-				case 'AUTHORISATION':
-						// Handle AUTHORISATION notification.
-						// Confirms that the payment was authorised successfully. 
-					break;
+					case 'AUTHORISATION':
+							// Handle AUTHORISATION notification.
+							// Confirms that the payment was authorised successfully. 
+						break;
+						
+					case 'CANCELLATION':
+							// Handle CANCELLATION notification.
+							// Confirms that the payment was cancelled successfully. 
+						break;
+						
+					case 'REFUND':
+							// Handle REFUND notification.
+							// Confirms that the payment was refunded successfully. 
+						break;
+						
+					case 'CANCEL_OR_REFUND':
+							// Handle CANCEL_OR_REFUND notification.
+							// Confirms that the payment was refunded or cancelled successfully. 
+						break;
+						
+					case 'CAPTURE':
+							// Handle CAPTURE notification.
+							// Confirms that the payment was successfully captured. 
+						break;
+						
+					case 'REFUNDED_REVERSED':
+							// Handle REFUNDED_REVERSED notification.
+							// Tells you that the refund for this payment was successfully reversed. 
+						break;
+						
+					case 'CAPTURE_FAILED':
+							// Handle AUTHORISATION notification.
+							// Tells you that the capture on the authorised payment failed. 
+						break;
+								
+					case 'REQUEST_FOR_INFORMATION':
+							// Handle REQUEST_FOR_INFORMATION notification.
+							// Information requested for this payment .
+						break;
+						
+					case 'NOTIFICATION_OF_CHARGEBACK':
+							// Handle NOTIFICATION_OF_CHARGEBACK notification.
+							// Chargeback is pending, but can still be defended 
+						break;
+						
+					case 'CHARGEBACK':
+							// Handle CHARGEBACK notification.
+							// Payment was charged back. This is not sent if a REQUEST_FOR_INFORMATION or
+							// NOTIFICATION_OF_CHARGEBACK notification has already been sent.
+						break;
 					
-				case 'CANCELLATION':
-						// Handle CANCELLATION notification.
-						// Confirms that the payment was cancelled successfully. 
-					break;
+					case 'CHARGEBACK_REVERSED':
+							// Handle CHARGEBACK_REVERSED notification.
+							// Chargeback has been reversed (cancelled).
+						break;
 					
-				case 'REFUND':
-						// Handle REFUND notification.
-						// Confirms that the payment was refunded successfully. 
-					break;
-					
-				case 'CANCEL_OR_REFUND':
-						// Handle CANCEL_OR_REFUND notification.
-						// Confirms that the payment was refunded or cancelled successfully. 
-					break;
-					
-				case 'CAPTURE':
-						// Handle CAPTURE notification.
-						// Confirms that the payment was successfully captured. 
-					break;
-					
-				case 'REFUNDED_REVERSED':
-						// Handle REFUNDED_REVERSED notification.
-						// Tells you that the refund for this payment was successfully reversed. 
-					break;
-					
-				case 'CAPTURE_FAILED':
-						// Handle AUTHORISATION notification.
-						// Tells you that the capture on the authorised payment failed. 
-					break;
-							
-				case 'REQUEST_FOR_INFORMATION':
-						// Handle REQUEST_FOR_INFORMATION notification.
-						// When there is a dispute you are requested to provide information for the specific payment. 
-					break;
-					
-				case 'NOTIFICATION_OF_CHARGEBACK':
-						// Handle NOTIFICATION_OF_CHARGEBACK notification.
-						// Let's you know that someone has issued a chargeback
-					break;
-					
-				case 'CHARGEBACK':
-						// Handle CHARGEBACK notification.
-						// Let's you know that money for this payment was chargebacked. 
-					break;
-				
-				case 'CHARGEBACK_REVERSED':
-						// Handle CHARGEBACK_REVERSED notification.
-						// Notifies you that the chargeback for this payment was reversed. 
-					break;
-				
-				case 'REPORT_AVAILABLE':
-						// Handle REPORT_AVAILABLE notification.
-						// There is a new report available, the URL of the report is in the "reason" field.
-					break;
+					case 'REPORT_AVAILABLE':
+							// Handle REPORT_AVAILABLE notification.
+							// There is a new report available, the URL of the report is in the "reason" field.
+						break;
 			}
 		}
 			

@@ -40,7 +40,7 @@
   */
  
   $request = array(  
-	"merchantReference" => "Test payment " . date("Y-m-d H:i:s"),
+	"merchantReference" => "TEST-PAYMENT-" . date("Y-m-d-H:i:s"),
 	"paymentAmount" => "199",
 	"currencyCode" => "EUR",	
 	"shipBeforeDate" => date("Y-m-d",strtotime("+3 days")),
@@ -77,18 +77,15 @@
   $cryptHMAC = new Crypt_HMAC($hmacKey, "sha1");
   
   $merchantSig = base64_encode(pack("H*",$cryptHMAC->hash(
-	$request['paymentAmount'] . $request['currencyCode'] . $request['shipBeforeDate'] . $request['merchantReference'] . $request['skinCode'] . $request['merchantAccount'] . 
-	$request['sessionValidity'] . $request['shopperEmail'] . $request['shopperReference'] . $request['allowedMethods'] . $request['blockedMethods'] . $request['offset']
-  ))); 
+	$request["paymentAmount"] . $request["currencyCode"] . $request["shipBeforeDate"] . $request["merchantReference"] . $request["skinCode"] . $request["merchantAccount"] .
+	$request["sessionValidity"] . $request["shopperEmail"] . $request["shopperReference"] . $request["allowedMethods"] . $request["blockedMethods"] . $request["offset"]
+  )));
    
   $request["merchantSig"] = $merchantSig; 
-  
-  // sessionValidity needs encoding to replace the + which is processed as a space rather than a +.
-  $request['sessionValidity'] = urlencode($request['sessionValidity']);
     
   $url = "https://test.adyen.com/hpp/pay.shtml?";
   foreach($request as $field => $value)
-	$url .= "&".$field."=".$value;
+	$url .= "&".$field."=".urlencode($value);
 	
   // Please note that printing $url in the browser does some encoding to the URL causing 
   // it not to work, it should work putting $url in a link.

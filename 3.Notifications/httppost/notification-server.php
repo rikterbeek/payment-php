@@ -78,22 +78,23 @@
 				
 	case 'REQUEST_FOR_INFORMATION':
 			// Handle REQUEST_FOR_INFORMATION notification.
-			// When there is a dispute you are requested to provide information for the specific payment. 
+			// Information requested for this payment .
 		break;
 		
 	case 'NOTIFICATION_OF_CHARGEBACK':
 			// Handle NOTIFICATION_OF_CHARGEBACK notification.
-			// Let's you know that someone has issued a chargeback
+			// Chargeback is pending, but can still be defended 
 		break;
 		
 	case 'CHARGEBACK':
 			// Handle CHARGEBACK notification.
-			// Let's you know that money for this payment was chargebacked. 
+			// Payment was charged back. This is not sent if a REQUEST_FOR_INFORMATION or
+			// NOTIFICATION_OF_CHARGEBACK notification has already been sent.
 		break;
 	
 	case 'CHARGEBACK_REVERSED':
 			// Handle CHARGEBACK_REVERSED notification.
-			// Notifies you that the chargeback for this payment was reversed. 
+			// Chargeback has been reversed (cancelled).
 		break;
 	
 	case 'REPORT_AVAILABLE':

@@ -1,6 +1,6 @@
 <?php
 /**
- * Cancel a Payment
+ * Cancel a Payment using SOAP
  *
  * In order to cancel an authorised (card)  payment you send a modification 
  * request to the cancel action. This file shows how an authorised payment 
@@ -41,8 +41,8 @@
  try{
 	 $result = $client->cancel(array(
 		"modificationRequest" => array(
-			"merchantAccount" => "JessePiscaerCOM",
-			"originalReference" => "8613898852819655",
+			"merchantAccount" => "YourMerchantAccount",
+			"originalReference" => "PspReferenceOfTheAuthorisedPayment",
 		)
 	));
 	

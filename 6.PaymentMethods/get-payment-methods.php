@@ -35,12 +35,14 @@
 	"merchantSig" => "",
  );	
  
-  // HMAC Key is a shared secret KEY used to encrypt the signature, this can be configured in the skin. 
+ // HMAC Key is a shared secret KEY used to encrypt the signature. Set up the HMAC 
+ // key: Adyen Test CA >> Skins >> Choose your Skin >> Edit Tab >> Edit HMAC key for Test and Live 
  $hmacKey = "YourHmacSecretKey";
  $cryptHMAC = new Crypt_HMAC($hmacKey, "sha1");
- $request['merchantSig'] = base64_encode(pack("H*",$cryptHMAC->hash(
-	$request['paymentAmount'] . $request['currencyCode'] . $request['merchantReference'] . 
-	$request['skinCode'] .  $request['merchantAccount'] . $request['sessionValidity'])));
+ $request["merchantSig"] = base64_encode(pack("H*",$cryptHMAC->hash(
+	$request["paymentAmount"] . $request["currencyCode"] . $request["merchantReference"] . 
+	$request["skinCode"] .  $request["merchantAccount"] . $request["sessionValidity"]
+ )));
 
  $ch = curl_init();
  curl_setopt($ch, CURLOPT_URL, "https://test.adyen.com/hpp/directory.shtml");

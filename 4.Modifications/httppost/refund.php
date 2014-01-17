@@ -1,13 +1,13 @@
 <?php
 /**
- * Refund a Payment
+ * Refund a Payment using HTTP Post
  * 
  * Settled payments can be refunded by sending a modifiction request
  * to the refund action. This file shows how a settled payment 
  * can be refunded by a modification request using HTTP Post. 
  * 
- * Please note: using our API requires a web service user. 
- * Typically: ws@Company.YourCompanyCode
+ * Please note: using our API requires a web service user. Set up your Webservice 
+ * user: Adyen Test CA >> Settings >> Users >> ws@Company. >> Generate Password >> Submit 
  *  
  * @link    4.Modifications/httppost/refund.php 
  * @author  Created by Adyen Payments

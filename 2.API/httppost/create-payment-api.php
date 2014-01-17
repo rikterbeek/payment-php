@@ -13,7 +13,7 @@
  * @author	Created by Adyen
  */ 
  
-  /**
+ /**
   * A payment can be submitted by sending a PaymentRequest 
   * to the authorise action of the web service, the request should 
   * contain the following variables:
@@ -44,10 +44,10 @@
   
  $request = array(
     "action" => "Payment.authorise",
-    "paymentRequest.merchantAccount" => "JessePiscaerCOM", //YourMerchantAccount  
+    "paymentRequest.merchantAccount" => "YourMerchantAccount",   
 	"paymentRequest.amount.currency" => "EUR",
 	"paymentRequest.amount.value" => "199",
-	"paymentRequest.reference" => "Test payment " . date("Y-m-d H:i:s"),
+	"paymentRequest.reference" => "TEST-PAYMENT-" . date("Y-m-d-H:i:s"),
 	"paymentRequest.shopperIP" => "ShopperIPAddress",
 	"paymentRequest.shopperEmail" => "TheShopperEmailAddress",
 	"paymentRequest.shopperReference" => "YourReference",
@@ -71,7 +71,7 @@
  curl_setopt($ch, CURLOPT_URL, "https://pal-test.adyen.com/pal/adapter/httppost");
  curl_setopt($ch, CURLOPT_HEADER, false); 
  curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC  );
- curl_setopt($ch, CURLOPT_USERPWD, "ws@Company.JessePiscaer:GtrMU{mccv5R34pckSF7<Tdau"); //YourWSUser:YourWSUserPassword  
+ curl_setopt($ch, CURLOPT_USERPWD, "YourWSUser:YourWSUserPassword");   
  curl_setopt($ch, CURLOPT_POST,count($request));
  curl_setopt($ch, CURLOPT_POSTFIELDS,http_build_query($request));
  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

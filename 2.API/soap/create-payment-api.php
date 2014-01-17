@@ -68,7 +68,7 @@
 					"currency" => "EUR",
 					"value" => "199",
 				),
-				"reference" => "Test payment " . date("Y-m-d H:i:s"),
+				"reference" => "TEST-PAYMENT-" . date("Y-m-dH:i:s"),
 				"shopperIP" => "ShopperIPAddress",
 				"shopperEmail" => "TheShopperEmailAddress",
 				"shopperReference" => "YourReference",
