@@ -27,7 +27,8 @@
 		"password" => "YourWSUserPassword",   
 		"style" => SOAP_DOCUMENT,
 		"encoding" => SOAP_LITERAL,
-		"cache_wsdl" => WSDL_CACHE_BOTH
+		"cache_wsdl" => WSDL_CACHE_BOTH,
+		"trace" => 1
 	)
  );
  

@@ -63,26 +63,26 @@
    * 
    * The merchant signature is used by Adyen to verify if the posted data is not
    * altered by the shopper. The signature must be encrypted according to the procedure below.
-   * For this code example we use HMAC Pear (http://pear.php.net/package/Crypt_HMAC/download)
+   * If you're running PHP 5 >= 5.1.2, PECL hash >= 1.1 you can use hash_hmac(), if you don't
+   * you can use HMAC Pear (http://pear.php.net/package/Crypt_HMAC/download)
    * 
    * Please note: the signature does contain more variables, in this example
    * they are NOT required since they are empty. Please have a look at the
    * advanced HPP example.
    */ 
-  require_once "../lib/HMAC.php";
   
   // HMAC Key is a shared secret KEY used to encrypt the signature. Set up the HMAC 
   // key: Adyen Test CA >> Skins >> Choose your Skin >> Edit Tab >> Edit HMAC key for Test and Live 
   $hmacKey = "YourHmacSecretKey";  
-  $cryptHMAC = new Crypt_HMAC($hmacKey, "sha1");
   
-  $merchantSig = base64_encode(pack("H*",$cryptHMAC->hash(
-	$request["paymentAmount"] . $request["currencyCode"] . $request["shipBeforeDate"] . $request["merchantReference"] . $request["skinCode"] . $request["merchantAccount"] .
-	$request["sessionValidity"] . $request["shopperEmail"] . $request["shopperReference"] . $request["allowedMethods"] . $request["blockedMethods"] . $request["offset"]
+  $request["merchantSig"] = base64_encode(pack("H*",hash_hmac(
+  	'sha1',
+	$request["paymentAmount"] . $request["currencyCode"] . $request["shipBeforeDate"] . $request["merchantReference"] . 
+	$request["skinCode"] . $request["merchantAccount"] . $request["sessionValidity"] . $request["shopperEmail"] . 
+	$request["shopperReference"] . $request["allowedMethods"] . $request["blockedMethods"] . $request["offset"],
+	$hmacKey
   )));
    
-  $request["merchantSig"] = $merchantSig; 
-    
   $url = "https://test.adyen.com/hpp/pay.shtml?";
   foreach($request as $field => $value)
 	$url .= "&".$field."=".urlencode($value);

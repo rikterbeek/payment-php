@@ -22,21 +22,6 @@
  */
  
  if(isset($_POST['adyen-encrypted-data'])){
-	 /**
-	  * The payment can be submitted by sending a PaymentRequest 
-	  * to the authorise action of the web service, the request should 
-	  * contain the following variables:
-	  * - merchantAccount: The merchant account the payment was processed with.
-	  * - amount: The amount of the payment
-	  * 	- currency: the currency of the payment
-	  * 	- amount: the amount of the payment
-	  * - reference: Your reference
-	  * - shopperIP: The IP address of the shopper (optional/recommended)
-	  * - shopperEmail: The e-mail address of the shopper 
-	  * - shopperReference: The shopper reference, i.e. the shopper ID
-	  * - fraudOffset: Numeric value that will be added to the fraud score (optional)
-	  * - paymentRequest.additionalData.card.encrypted.json: The encrypted card catched by the POST variables.
-	  */
 	  
 	 /**
 	  * Create SOAP Client = new SoapClient($wsdl,$options)
@@ -48,29 +33,47 @@
 	  */
 	 $client = new SoapClient(
 		"https://pal-test.adyen.com/pal/Payment.wsdl", array(
-			"login" => "ws@Company.JessePiscaer", //YourWSUser  
-			"password" => "GtrMU{mccv5R34pckSF7<Tdau", //YourWSUserPassword  
+			"login" => "YourWSUser",  
+			"password" => "YourWSUserPassword",   
 			"style" => SOAP_DOCUMENT,
 			"encoding" => SOAP_LITERAL,
-			"cache_wsdl" => WSDL_CACHE_BOTH
+			"cache_wsdl" => WSDL_CACHE_BOTH,
+			"trace" => 1
 		)
 	 );
 		 
 	 try{
+	 	
+	 	 /**
+		  * The payment can be submitted by sending a PaymentRequest 
+		  * to the authorise action of the web service, the request should 
+		  * contain the following variables:
+		  * - merchantAccount: The merchant account the payment was processed with.
+		  * - amount: The amount of the payment
+		  * 	- currency: the currency of the payment
+		  * 	- amount: the amount of the payment
+		  * - reference: Your reference
+		  * - shopperIP: The IP address of the shopper (optional/recommended)
+		  * - shopperEmail: The e-mail address of the shopper 
+		  * - shopperReference: The shopper reference, i.e. the shopper ID
+		  * - fraudOffset: Numeric value that will be added to the fraud score (optional)
+		  * - paymentRequest.additionalData.card.encrypted.json: The encrypted card catched by the POST variables.
+		  */
+		  
 		$result = $client->authorise(array(
 				"paymentRequest" => array(
-					"merchantAccount" => "JessePiscaerCOM", //YourMerchantAccount 
+					"merchantAccount" => "YourMerchantAccount",  
 					"amount" => array(
 						"currency" => "EUR",
 						"value" => "199",
 					),
 					"reference" => "TEST-PAYMENT-" . date("Y-m-dH:i:s"),
-					//"shopperIP" => "ShopperIPAddress",
-					"shopperEmail" => "jesse.piscaer@adyen.com", //TheShopperEmailAddress
-					"shopperReference" => "12345", //YourReference
+					"shopperIP" => "ShopperIPAddress",
+					"shopperEmail" => "TheShopperEmailAddress",
+					"shopperReference" => "YourReference", 
 					"fraudOffset" => "0",
 					"additionalData" => array(
-						array("<key>card.encrypted.json</key><value>".$_POST['adyen-encrypted-data']."</value>")	
+						array("key" => "card.encrypted.json","value" => $_POST['adyen-encrypted-data'])
 					)
 				)
 			)
@@ -86,12 +89,12 @@
 		 * - refusalReason: If the payment was refused, the refusal reason.
 		 */ 
 		print_r($result);
-							
-	 }catch(SoapFault $ex){
+		 					
+	 }catch(SoapFault $ex){	
 		 print("<pre>");
 		 print($ex);
 		 print("</pre>");
-	 }
+	 }	 
  }
 	  
 ?>
@@ -134,15 +137,15 @@
 			var form    = document.getElementById('adyen-encrypted-form');
 			/* Put your WS users' CSE key here */
 			/* Adyen CA -> Settings -> Users -> Choose the WS user -> Copy CSE key */
-			var key ="10001|90F27F14AC438986154318747F0FEEFC33703E742A04F58459B8FE"
- + "42148D2E5E5F4B23FE162EC0F699354B918E4E28FDCC8D15FDE2C6BE324F"
- + "5B25034DEBD157A0BF57FB8C88D84A45AFC0D6C3CA1D06DEE4186145D7FD"
- + "7B181630D8A7A05597616C5BF6C1517A78BCED88A2A8C446F6712B0781D6"
- + "586A088123C70E90ECD2E6655559B22C82C4C3D661CFB2F4215E6D2015CC"
- + "2C155FF369D92A75F5BDB5CCCD8655B685CBDAF375A7E34CD02664EB8BBC"
- + "06B4AA9C642E6CEEB9E7B4310D117D11FC149CE9B6960BBB44C18EAD140A"
- + "FBE5180C963F6661FCB8A3DF3A7792F8E966E653A4E6030F933D7BF17813"
- + "8FB6FE859DB9295A7EAC3F17D65CA2937AA903";
+			var key = "YOUR-KEY-HERE-YOUR-KEY-HERE-YOUR-KEY-HERE-YOUR-KEY-HERE"
+					 + "YOUR-KEY-HERE-YOUR-KEY-HERE-YOUR-KEY-HERE-YOUR-KEY-HERE"
+					 + "YOUR-KEY-HERE-YOUR-KEY-HERE-YOUR-KEY-HERE-YOUR-KEY-HERE"
+					 + "YOUR-KEY-HERE-YOUR-KEY-HERE-YOUR-KEY-HERE-YOUR-KEY-HERE"
+					 + "YOUR-KEY-HERE-YOUR-KEY-HERE-YOUR-KEY-HERE-YOUR-KEY-HERE"
+					 + "YOUR-KEY-HERE-YOUR-KEY-HERE-YOUR-KEY-HERE-YOUR-KEY-HERE"
+					 + "YOUR-KEY-HERE-YOUR-KEY-HERE-YOUR-KEY-HERE-YOUR-KEY-HERE"
+					 + "YOUR-KEY-HERE-YOUR-KEY-HERE-YOUR-KEY-HERE-YOUR-KEY-HERE"
+					 + "YOUR-KEY-HERE-YOUR-KEY-HERE-YOUR-KEY-HERE-YOUR-KEY-HERE";
 			 adyen.encrypt.createEncryptedForm( form, key, {});
 		</script>
 	 </body>

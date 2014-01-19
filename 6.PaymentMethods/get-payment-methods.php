@@ -17,8 +17,7 @@
  * Please note that the countryCode field is mandatory to receive 
  * back the correct payment methods. 
  */
- require_once "../lib/HMAC.php";
- 
+
  /**
   * Payment Request
   * The following fields are required for the directory 
@@ -35,13 +34,17 @@
 	"merchantSig" => "",
  );	
  
- // HMAC Key is a shared secret KEY used to encrypt the signature. Set up the HMAC 
- // key: Adyen Test CA >> Skins >> Choose your Skin >> Edit Tab >> Edit HMAC key for Test and Live 
+ // If you're running PHP 5 >= 5.1.2, PECL hash >= 1.1 you can use hash_hmac(), if you don't
+ // you can use HMAC Pear (http://pear.php.net/package/Crypt_HMAC/download)HMAC Key is a shared secret KEY used to 
+ // encrypt the signature. Set up the HMAC  key: Adyen Test CA >> Skins >> Choose your Skin >> Edit Tab >> 
+ // Edit HMAC key for Test and Live 
  $hmacKey = "YourHmacSecretKey";
- $cryptHMAC = new Crypt_HMAC($hmacKey, "sha1");
- $request["merchantSig"] = base64_encode(pack("H*",$cryptHMAC->hash(
+ 
+ $request["merchantSig"] = base64_encode(pack("H*",hash_hmac(
+  	'sha1',
 	$request["paymentAmount"] . $request["currencyCode"] . $request["merchantReference"] . 
-	$request["skinCode"] .  $request["merchantAccount"] . $request["sessionValidity"]
+	$request["skinCode"] .  $request["merchantAccount"] . $request["sessionValidity"],
+	$hmacKey
  )));
 
  $ch = curl_init();

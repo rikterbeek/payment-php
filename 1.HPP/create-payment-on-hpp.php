@@ -43,8 +43,8 @@
   $paymentAmount = 199; 	
   $currencyCode = "EUR";	
   $shipBeforeDate = date("Y-m-d",strtotime("+3 days")); 
-  $skinCode = "YourSkinCode";
-  $merchantAccount = "YourMerchantAccount";
+  $skinCode = "Iix4eLo8";
+  $merchantAccount = "JessePiscaerCOM";
   $sessionValidity = date("c",strtotime("+1 days")); 
   $shopperLocale = "en_US"; 
   $orderData = base64_encode(gzencode("Orderdata to display on the HPP can be put here"));
@@ -60,23 +60,25 @@
    * 
    * The merchant signature is used by Adyen to verify if the posted data is not
    * altered by the shopper. The signature must be encrypted according to the procedure below.
-   * For this code example we use HMAC Pear (http://pear.php.net/package/Crypt_HMAC/download)
+   * If you're running PHP 5 >= 5.1.2, PECL hash >= 1.1 you can use hash_hmac(), if you don't
+   * you can use HMAC Pear (http://pear.php.net/package/Crypt_HMAC/download)
    * 
    * Please note: the signature does contain more variables, in this example
    * they are NOT required since they are empty. Please have a look at the
    * advanced HPP example for a comprehensive overview on what should be part of the signature.
    */ 
-  require_once "../lib/HMAC.php";
-  
+
   // HMAC Key is a shared secret KEY used to encrypt the signature. Set up the HMAC 
   // key: Adyen Test CA >> Skins >> Choose your Skin >> Edit Tab >> Edit HMAC key for Test and Live 
-  $hmacKey = "YourHmacSecretKey";
-  $cryptHMAC = new Crypt_HMAC($hmacKey, "sha1");
+  $hmacKey = "123456";
   
-  $merchantSig = base64_encode(pack("H*",$cryptHMAC->hash(
-	$paymentAmount . $currencyCode . $shipBeforeDate . $merchantReference . $skinCode . $merchantAccount . 
-	$sessionValidity . $shopperEmail . $shopperReference . $allowedMethods . $blockedMethods . $offset
-  ))); 
+  $merchantSig = base64_encode(pack("H*",hash_hmac(
+  	'sha1',
+  	$paymentAmount . $currencyCode . $shipBeforeDate . $merchantReference . $skinCode . $merchantAccount . 
+	$sessionValidity . $shopperEmail . $shopperReference . $allowedMethods . $blockedMethods . $offset,
+	$hmacKey
+  )));	
+  
 ?>
 <form method="GET" action="https://test.adyen.com/hpp/pay.shtml" target="_blank">
 	<input type="hidden" name="merchantReference" value="<?=$merchantReference ?>"/>

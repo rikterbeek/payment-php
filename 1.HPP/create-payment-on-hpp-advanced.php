@@ -162,50 +162,56 @@
    * 
    * The signatures are used by Adyen to verify if the posted data is not
    * altered by the shopper. The signature must be encrypted according to the procedure below.
-   * For this code example we use HMAC Pear (http://pear.php.net/package/Crypt_HMAC/download)
+   * If you're running PHP 5 >= 5.1.2, PECL hash >= 1.1 you can use hash_hmac(), if you don't
+   * you can use HMAC Pear (http://pear.php.net/package/Crypt_HMAC/download)
    * 
    * Please note: the signature does contain more variables, in this example
    * they are NOT required since they are empty. Please have a look at the
    * advanced HPP example.
    */ 
-  require_once "../lib/HMAC.php";
   
   // HMAC Key is a shared secret KEY used to encrypt the signature. Set up the HMAC 
   // key: Adyen Test CA >> Skins >> Choose your Skin >> Edit Tab >> Edit HMAC key for Test and Live 
   $hmacKey = "YourHmacSecretKey";
-  $cryptHMAC = new Crypt_HMAC($hmacKey, "sha1");
 
   // Compute the merchantSig
-  $merchantSig = base64_encode(pack("H*",$cryptHMAC->hash(
+  $merchantSig = base64_encode(pack("H*",hash_hmac(
+  	'sha1',
 	$paymentAmount . $currencyCode . $shipBeforeDate . $merchantReference . $skinCode . $merchantAccount .
 	$sessionValidity . $shopperEmail . $shopperReference . $recurringContract .  
 	$allowedMethods . $blockedMethods . $shopperStatement . $merchantReturnData . 
 	$shopperInfo["billing"]["billingAddressType"] . $shopperInfo["delivery"]["deliveryAddressType"] . 
-	$shopperInfo["shopper"]["shopperType"] . $offset
+	$shopperInfo["shopper"]["shopperType"] . $offset,
+	$hmacKey
   ))); 
   
   // Compute the billingSig
-  $billingSig = base64_encode(pack("H*",$cryptHMAC->hash(
+  $billingSig = base64_encode(pack("H*",hash_hmac(
+  	'sha1',
 	$shopperInfo["billing"]["billingAddress.street"] .
 	$shopperInfo["billing"]["billingAddress.houseNumberOrName"] .
 	$shopperInfo["billing"]["billingAddress.city"] .
 	$shopperInfo["billing"]["billingAddress.postalCode"] .
 	$shopperInfo["billing"]["billingAddress.stateOrProvince"] .
-	$shopperInfo["billing"]["billingAddress.country"]
+	$shopperInfo["billing"]["billingAddress.country"],
+	$hmacKey
   )));
   
   // Compute the deliverySig
-  $deliveryAddressSig = base64_encode(pack("H*",$cryptHMAC->hash(
+  $deliveryAddressSig = base64_encode(pack("H*",hash_hmac(
+  	'sha1',
 	$shopperInfo["delivery"]["deliveryAddress.street"] .
 	$shopperInfo["delivery"]["deliveryAddress.houseNumberOrName"] .
 	$shopperInfo["delivery"]["deliveryAddress.city"] .
 	$shopperInfo["delivery"]["deliveryAddress.postalCode"] .
 	$shopperInfo["delivery"]["deliveryAddress.stateOrProvince"] .
-	$shopperInfo["delivery"]["deliveryAddress.country"]
+	$shopperInfo["delivery"]["deliveryAddress.country"],
+	$hmacKey
   )));
   
   // Compute the shopperSig
-  $shopperSig = base64_encode(pack("H*",$cryptHMAC->hash(
+  $shopperSig = base64_encode(pack("H*",hash_hmac(
+  	'sha1',
 	$shopperInfo["shopper"]["shopper.firstName"] .
 	$shopperInfo["shopper"]["shopper.infix"] .
 	$shopperInfo["shopper"]["shopper.lastName"] .
@@ -213,7 +219,8 @@
 	$shopperInfo["shopper"]["shopper.dateOfBirthDayOfMonth"] .
 	$shopperInfo["shopper"]["shopper.dateOfBirthMonth"] . 
 	$shopperInfo["shopper"]["shopper.dateOfBirthYear"] . 
-	$shopperInfo["shopper"]["shopper.telephoneNumber"]
+	$shopperInfo["shopper"]["shopper.telephoneNumber"],
+	$hmacKey
   )));
 
 ?>

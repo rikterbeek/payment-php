@@ -28,7 +28,8 @@
 	"https://ca-test.adyen.com/ca/services/Notification?wsdl", array(
 		"style" => SOAP_DOCUMENT,
 		"encoding" => SOAP_LITERAL,
-		"cache_wsdl" => WSDL_CACHE_BOTH
+		"cache_wsdl" => WSDL_CACHE_BOTH,
+		"trace" => 1
 	)
  ); 
  $server->addFunction("sendNotification"); 
