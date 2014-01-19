@@ -48,6 +48,11 @@ The code examples in this reposity help you integrate with the Adyen platform us
     - openinvoice-server.php            : Implementation of Open Invoice service.
   - soap
     - openinvoice-server.php            : Implementation of Open Invoice service.
+8.Customfields
+  - httppost
+    - customfields-server.php           : Custom fields service.
+  - soap
+    - customfields-server.php           : Custom fields service.
 ```
 ## Manuals
 The code examples are based on our [Integration manual](https://support.adyen.com/index.php?/Knowledgebase/Article/GetAttachment/1301/1287312) and the [API manual](https://support.adyen.com/index.php?/Knowledgebase/Article/GetAttachment/2102/1543852) which provides rich information on how our platform works. Please find our manuals on [support.adyen.com](support.adyen.com). 
