@@ -31,8 +31,8 @@
 
 /**
   * Create a SoapServer which implements the SOAP protocol used by Adyen and 
-  * implement the sendNotification action in order to call a function handling
-  * the notification.
+  * implement the retrieveDetail action in order to call a function handling
+  * the order lines.
   * 
   * new SoapServer($wsdl,$options)
   * - $wsdl points to the wsdl you are using;
